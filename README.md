@@ -6,3 +6,9 @@ Don't forget to write your credentials to the database_common.py, data_manager.p
 Changes 2.1:
 - updated image uploader system
 - minor bugfixes
+
+
+Pictures:
+![alt text](https://i.imgur.com/kiXQv3L.png)
+![alt text](https://i.imgur.com/6OMZTkd.png)
+![alt text](https://i.imgur.com/2vF12Qo.png)
