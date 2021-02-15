@@ -211,4 +211,4 @@ def vote_comment_down(comment_id=None, question_id=None):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=4987)
