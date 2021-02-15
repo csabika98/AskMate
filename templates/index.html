@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+    {%block head%}
+        <title>AskMate</title>
+
+    {%endblock%}
+
+    {% block body%}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 card-margin">
+                <div class="card search-form" style="-webkit-box-shadow: 5px 5px 15px 3px rgba(0,0,0,0.4); 
+                box-shadow: 5px 5px 15px 3px rgba(0,0,0,0.4);">
+                    <div class="card-body p-0">
+                        <form id="search-form">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="row no-gutters">
+                                        <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                                            <select class="form-control" name="search-tag">
+                                                <option value="" selected disabled>Tags</option>
+                                                <option value="2">SQL</option>
+                                                <option value="1">Python</option>
+                                                <option value="3">CSS</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-8 col-md-6 col-sm-12 p-0">
+                                            <input type="text" placeholder="Search..." class="form-control" name="search">
+                                        </div>
+
+                                        <div class="col-lg-1 col-md-3 col-sm-12 p-0">
+                                            <button type="submit" class="btn btn-base">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-margin" style="-webkit-box-shadow: 5px 5px 15px 3px rgba(0,0,0,0.4); 
+            box-shadow: 5px 5px 15px 3px rgba(0,0,0,0.4);">
+                <div class="card-body">
+                    <div class="row search-body" >
+                        <div class="col-lg-12">
+                            <div class="search-result">
+                                <div class="result-header">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <a href="/add_questions" style='text-align:center;'type="button" class="badge rounded-pill bg-secondary text-decoration-none">Ask question</a>
+                                            <div class="result-actions">
+                                                <div class="result-sorting">
+                                                    <span>Sort By:</span>                                                    
+                                                    <form action="/">
+                                                    <select class="form-control border-0" name="sort-option" onchange="this.form.submit()">
+                                                        <option value="most-view">Most viewed</option>
+                                                        <option value="most-upvote">Most upvoted</option>
+                                                        <option value="least-upvote">Least upvoted</option>
+                                                        <option value="least-view">Least viewed</option>
+                                                    </select>
+                                                </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="result-body">
+                                    <div class="table-responsive">
+                                        <table class="table widget-26">
+                                            <tbody>
+                                                {%for item in list_questions%}
+                                                <tr>
+                                                    <td>
+                                                        <div class="widget-26-job-title">
+                                                            <a href="/display/{{item.id}}">{{item.title}}</a>
+                                                            <p class="m-0"><a class="employer-name text-decoration-none">userName</a> <span class="text-muted time">{{item.submission_time}}</span></p>
+                                                                                                                    <a href="/edit_questions/{{item.id}}" type="button" class="far fa-edit text-decoration-none"></a>
+                                                            <a href="/delete/{{item.id}}" type="button" class="fas fa-trash-alt text-decoration-none"></a>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="widget-26-job-info">
+                                                            {% if item.vote_number >= 5 %}
+                                                            <span  class="badge rounded-pill bg-success">{{item.vote_number}} votes</span>
+                                                            {% elif item.vote_number < 0 %}
+                                                            <span  class="badge rounded-pill bg-danger">{{item.vote_number}} votes</span>
+                                                            {%else%}
+                                                            <span  class="badge rounded-pill bg-secondary">{{item.vote_number}} votes</span>
+                                                            {%endif%}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="badge rounded-pill bg-secondary">{{item.view_number}} views</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="wrapper">         
+                                                            {%for i in list_tags%}
+                                                            {%for j in i%}
+                                                            {%if item.id == j.question_id%}
+                                                            <span class="badge rounded-pill bg-primary">{{j.name}}</span>
+                                                            {%endif%}
+                                                            {%endfor%}
+                                                            {%endfor%}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                {%endfor%}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    {%endblock%}
