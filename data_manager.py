@@ -154,6 +154,14 @@ def show_primary_key(cursor:RealDictCursor):
     for row in rows:
         return row["nextval"]
 
+@database_common.connection_handler
+def list_users(cursor:RealDictCursor) -> list:
+    query = f"""
+        SELECT *
+        FROM users
+    """
+    cursor.execute(query)
+    return cursor.fetchall()
 
 
 @database_common.connection_handler

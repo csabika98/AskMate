@@ -28,6 +28,7 @@ def list_the_questions():
         email = request.form.get("email")
         regdate = datetime.datetime.today()
         data_manager.add_new_user(username, password, email, regdate.strftime("%d-%B-%Y %H:%M:%S"))
+        return redirect("/")
     list_id = data_manager.show_id()
     list_tags = data_manager.list_all_tags(list_id)
 
@@ -61,6 +62,11 @@ def add_tag(cursor: RealDictCursor, question_id: str, tag_id: str) -> list:
 def update_tag(cursor: RealDictCursor, question_id: str, tag_id: str) -> list:
     cursor.execute("""UPDATE question_tag SET question_id = %s, tag_id = %s WHERE question_id = %s""", (question_id,tag_id,question_id))
 
+
+@app.route("/users")
+def list_users():
+    list_users = data_manager.list_users()
+    return render_template("users.html", list_users=list_users)
 
 @app.route("/add_questions/", methods=["GET", "POST"])
 def add_questions():

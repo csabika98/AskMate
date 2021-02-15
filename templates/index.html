@@ -6,14 +6,13 @@
     {%endblock%}
 
     {% block body%}
-    
-            <div class="container">
-                <button type="button" 
-                class="btn btn-primary" 
-                data-toggle="modal" 
-                data-target="#exampleModal"> 
-            Register 
-        </button> 
+
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <a class="btn btn-primary" href="/users" role="button">Registered users</a>
+        <button type="button" class="btn btn-primary" data-toggle="modal" 
+        data-target="#exampleModal">Register</button>
+      </div>
+
 
         <!-- register -->
         <div class="modal fade"

@@ -1,0 +1,35 @@
+{%extends 'base.html' %}
+
+{%block head%}
+
+{%endblock%}
+
+{%block body%}
+<h3 class="display-3 text-center">Registered users</h3>
+
+<div class="row justify-content-center">
+    <div class="col-auto">
+        <table class="table table-bordered table-striped table-light table-hover">
+            <thead>
+            <tr>           
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Registration date</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+                {%for item in list_users%}
+            <tr>
+                <td>{{item.username}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.regdate}}</td>
+            </tr>
+            {%endfor%}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+{%endblock%}
