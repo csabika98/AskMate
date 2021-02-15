@@ -63,9 +63,9 @@ def add_new_answer(submission_time, vote_number, question_id, message, image):
     modify_database("""INSERT INTO answer(submission_time, vote_number, question_id, message, image) VALUES
                     (%s, %s, %s, %s, %s); """, (submission_time, vote_number, question_id, message, image))
 
-def add_new_user(username:str, password:str, regdate:str, email:str):
+def add_new_user(username:str, password:str,email:str, regdate:str):
     """Adding new users to our AskMate"""
-    modify_database("""INSERT INTO users(username, password, regdate, email) VALUES (%s,%s,%s,%s); """, (username, password, regdate, email))
+    modify_database("""INSERT INTO users(username,password,email,regdate) VALUES (%s,%s,%s,%s); """, (username, password,email,regdate))
 
 def edit_questions(image, submission_time, message, question_id, title):
     """Modify the questions"""

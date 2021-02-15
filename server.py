@@ -9,6 +9,8 @@ from psycopg2.extras import DictConnection, DictCursor, NamedTupleCursor, RealDi
 import data_manager
 from werkzeug.utils import secure_filename
 import os
+import datetime
+
 
 UPLOAD_FOLDER = 'static/images/'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
@@ -16,15 +18,16 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
+
 @app.route("/", methods=["GET", "POST"])
 def list_the_questions():
     list_questions = data_manager.show_answers()
     if request.method == "POST":
-        username = request.form.get() # need to add the HTML side FORM NAME/ID
-        password = request.form.get()
-        email = request.form.get()
-        regdate = request.form.get()
-        data_manager.add_new_user(username, password, email, regdate)
+        username = request.form.get("username") # need to add the HTML side FORM NAME/ID
+        password = request.form.get("password")
+        email = request.form.get("email")
+        regdate = datetime.datetime.today()
+        data_manager.add_new_user(username, password, email, regdate.strftime("%d-%B-%Y %H:%M:%S"))
     list_id = data_manager.show_id()
     list_tags = data_manager.list_all_tags(list_id)
 
