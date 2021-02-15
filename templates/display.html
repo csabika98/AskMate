@@ -13,6 +13,7 @@
 {%for i in list_questions%}
 <section class="card mt-4"  style="margin: auto; width: 88%; margin-bottom: 2%;">
     <div class="border p-2">
+        <a class="fas fa-chevron-up" href="/display/{{question_id}}/vote_up" role="button" style="text-decoration: none;"></a>
         {% if i.vote_number >= 5 %}
         <span style="margin: 5px;" class="badge rounded-pill bg-success">{{i.vote_number}}</span>
         {% elif i.vote_number < 0 %}
@@ -20,27 +21,29 @@
         {%else%}
         <span style="margin: 5px;" class="badge rounded-pill bg-secondary">{{i.vote_number}}</span>
         {%endif%}
-        <a class="fas fa-chevron-up" href="/display/{{question_id}}/vote_up" role="button" style="text-decoration: none;"></a>
         <a class="fas fa-chevron-down" href="/display/{{question_id}}/vote_down" role="button" style="text-decoration: none;"></a>
-        <div class="row m-0" style="text-align: center;">
-            <div class="" style="text-align:center;" >
+        
+        <!-- Question-->
+        <div class="row m-0">
+            <div>
+                <h2 class="text-capitalize h5 mb-0" style="text-align: center;">{{i.title}}</h2>
                 <a class="text-decoration-none">
                     <img class="" src="https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png" width="50" height="50" alt="...">
                 </a>
-            
+                <div class="row">
+                        <div class="col-2">
+                            <p class="small text-secondary m-0 mt-1">Username</p>
+                            <p class="small text-secondary m-0 mt-1">{{i.submission_time}}</p>
+                        </div>
+
+                        <div class="col-8 text-center">     
+                            <p style="text-align: center;">{{i.message}}</p>
+                        </div>                 
+                </div>
             </div>
-            
-            <div class="flex-grow-1 pl-2">
+        </div>
+        <!-- question end-->
 
-                <a class="text-decoration-none">
-                    <h2 class="text-capitalize h5 mb-0">{{i.title}}</h2>
-                </a> 
-                <p class="small text-secondary m-0 mt-1">{{i.submission_time}}</p>
-                <h2 class="text-capitalize h5 mb-0">{{i.messsage}}</h2>
-            </div>
-
-
-            <div style="text-align: center;"><p>{{i.message}}</p></div>
         {%if i.image != "default.png" %}
         <img src="/static/images/{{i.image}}" width="300" height="300" class="centimage">
         <img src={{i.image}} class="card-img-bottom" alt="">
@@ -89,6 +92,7 @@
 	    <div class="card-body">      
 	        <div class="row">
         	    <div class="col-md-2">	
+                    <a class="fas fa-chevron-up" href="/comments/{{question_id}}/{{item.id}}/vote_up" role="button" style="text-decoration: none;"></a>
                     {% if item.vote_number >= 5 %}
                     <span style="margin: 5px;" class="badge rounded-pill bg-success">{{item.vote_number}}</span>
                     {% elif item.vote_number < 0 %}
@@ -96,39 +100,52 @@
                     {%else%}
                     <span style="margin: 5px;" class="badge rounded-pill bg-secondary">{{item.vote_number}}</span>
                     {%endif%}
-                    <a class="fas fa-chevron-up" href="/comments/{{question_id}}/{{item.id}}/vote_up" role="button" style="text-decoration: none;"></a>
-        
-                    <a class="fas fa-chevron-down" href="/comments/{{question_id}}/{{item.id}}/vote_down" role="button" style="text-decoration: none;"></a>
 
-        	        <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
-        	        <p class="text-secondary text-center">{{item.submission_time}}</p>
+                    <a class="fas fa-chevron-down" href="/comments/{{question_id}}/{{item.id}}/vote_down" role="button" style="text-decoration: none;"></a>
         	    </div>
+                <div class="row">
+                    <div class="col-3">
+                        <img src="https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png" width="50" height="50"/>
+                        <p class="small text-secondary m-0 mt-1">Username</p>
+                        <p class="text-secondary">{{item.submission_time}}</p>
+                    </div>
+                    <div class="col">
+                        <p>{{item.message}}</p>
+
+                    </div>
+                    <div class="col-md-auto">
+                        <a style="text-decoration: none;" href="/comments/{{item.id}}/{{question_id}}/add/"><i class="fa fa-reply"></i></a>
+                        <a style="text-decoration: none;" href="/display/{{item.id}}/delete"><i class="fas fa-trash-alt"></i></a>
+                    </div>
+                </div>
+
+
         	    <div class="col-md-10">
-        	       <div class="clearfix"></div>
-                   <div class="text-text" style="text-align: left;"><p>{{item.message}}</p></div>
+
                     {%if item.image != 'default.png'%}
         	        <p>
                         <img src="/static/images/{{item.image}}" width="350" height="350" class="centimage">
-
                    </p>
                    {%endif%}
-                   <a href="/comments/{{item.id}}/{{question_id}}/add/" class="float-end btn btn-outline-primary ml-2">  <i class="fa fa-reply"></i></a>
-                   <a class="float-end btn btn-outline-primary ml-2" href="/display/{{item.id}}/delete"> <i class="fas fa-trash-alt"></i> </a>
+
         	    </div>
             </div>
             {%for i in nested_comment%}
             {%if i.answer_id == item.id%}
 	        	<div class="card card-inner">
             	    <div class="card-body">
+
             	        <div class="row">
-                    	    <div class="col-md-2">
-                    	        <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
-                    	        <p class="text-secondary text-center">{{i.submission_time}}</p>
+                    	    <div class="col-3">
+                    	        <img src="https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png" width="50" height="50"/>
+                                <p class="small text-secondary m-0 mt-1">Username</p>
+                    	        <p class="text-secondary">{{i.submission_time}}</p>
                     	    </div>
-                    	    <div class="col-md-10">
-                    	        <p><a href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>replied_user</strong></a></p>
+                            
+                    	    <div class="col">
                     	        <p>{{i.message}}</p>
                     	    </div>
+
             	        </div>
             	    </div>
                 </div>
