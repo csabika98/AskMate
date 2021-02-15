@@ -16,10 +16,15 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def list_the_questions():
     list_questions = data_manager.show_answers()
-    
+    if request.method == "POST":
+        username = request.form.get() # need to add the HTML side FORM NAME/ID
+        password = request.form.get()
+        email = request.form.get()
+        regdate = request.form.get()
+        data_manager.add_new_user(username, password, email, regdate)
     list_id = data_manager.show_id()
     list_tags = data_manager.list_all_tags(list_id)
 
