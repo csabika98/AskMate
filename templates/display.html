@@ -71,6 +71,8 @@
                             <i class="fab fa-css3-alt">CSS</i>
                             {% elif i.name == 'sql' %}
                             <i class="fas fa-database">SQL</i>
+                            {%else%}
+                            <i class="fas fa-code">{{i.name}}</i>
                             {%endif%}
                             {%endfor%}
 
