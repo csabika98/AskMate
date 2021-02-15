@@ -10,7 +10,7 @@
 
         <!-- register -->
         <div class="modal fade"
-            id="exampleModal"> 
+            id="register"> 
             <div class="modal-dialog"> 
                 <div class="modal-content"> 
                     <div class="modal-body ">
@@ -74,16 +74,32 @@
             <div class="card card-margin" style="-webkit-box-shadow: 5px 5px 15px 3px rgba(0,0,0,0.4); 
             box-shadow: 5px 5px 15px 3px rgba(0,0,0,0.4);">
                 <div class="card-body">
+                    
                 <!-- navigation buttons-->
-                <div class="text-center">
-                    <div class="btn-group text-center" role="group" aria-label="Basic example">
-                        <a class="btn btn-outline-secondary btn-sm" href="/users" role="button">Registered users</a>
-                        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" 
-                        data-target="#exampleModal">Register</button>
-                        <a href="/add_questions" style='text-align:center;'type="button" class="btn btn-outline-secondary btn-sm">Ask question</a>
+                <div class="row">
+
+                    <div class="col">
+                        <div class="btn-group text-center" role="group" aria-label="loginGroup">
+                            <a href="/add_questions" style='text-align:center;'type="button" class="btn btn-outline-secondary btn-sm">Ask question</a>
+                            <a class="btn btn-outline-secondary btn-sm" href="/users" role="button">Registered users</a>
+                    
                         </div>
                     </div>
+
+                    <div class="col d-flex justify-content-end">
+                        <div class="btn-group text-center" role="group" aria-label="loginGroup">
+                            <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" 
+                            data-target="#register">Register</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" 
+                            data-target="#login">login</button>
+
+                        </div>
+                       
+                    </div>
+
+                </div>
                 <!-- navigation buttons end-->
+
                     <div class="row search-body" >
                         <div class="col-lg-12">
                             <div class="search-result">
