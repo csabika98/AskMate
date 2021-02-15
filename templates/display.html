@@ -29,16 +29,19 @@
                 </a>
             
             </div>
+            
             <div class="flex-grow-1 pl-2">
 
-                <a class="text-decoration-none" href="#">
+                <a class="text-decoration-none">
                     <h2 class="text-capitalize h5 mb-0">{{i.title}}</h2>
                 </a> 
                 <p class="small text-secondary m-0 mt-1">{{i.submission_time}}</p>
                 <h2 class="text-capitalize h5 mb-0">{{i.messsage}}</h2>
             </div>
+
+
             <div style="text-align: center;"><p>{{i.message}}</p></div>
-        {%if i.image != "NONE"%}
+        {%if i.image != "default.png" %}
         <img src="/static/images/{{i.image}}" width="300" height="300" class="centimage">
         <img src={{i.image}} class="card-img-bottom" alt="">
         {%endif%}
@@ -103,7 +106,7 @@
         	    <div class="col-md-10">
         	       <div class="clearfix"></div>
                    <div class="text-text" style="text-align: left;"><p>{{item.message}}</p></div>
-                    {%if item.image != 'NONE'%}
+                    {%if item.image != 'default.png'%}
         	        <p>
                         <img src="/static/images/{{item.image}}" width="350" height="350" class="centimage">
 

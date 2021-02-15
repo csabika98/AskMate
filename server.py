@@ -31,6 +31,7 @@ def list_the_questions():
         return redirect("/")
     list_id = data_manager.show_id()
     list_tags = data_manager.list_all_tags(list_id)
+    all_tag = data_manager.list_tags()
 
     city = request.args.get('sort-option')
     tags = request.args.get('search-tag')
@@ -47,7 +48,7 @@ def list_the_questions():
     else:
         list_questions = data_manager.show_answers()
 
-    return render_template("index.html",list_tags=list_tags , list_questions=list_questions)
+    return render_template("index.html",list_tags=list_tags , list_questions=list_questions, all_tag=all_tag)
 
 
 @database_common.connection_handler
@@ -174,14 +175,14 @@ def add_comments(question_id=None):
     list_questions = data_manager.show_message_only(question_id)
     if request.method == "POST":
         message = request.form["message"]
-        submission_time = request.form["submission_time"]
+        submission_time = datetime.datetime.today()
         vote_number = 0
         file_name = "default.png"
         uploaded_image = request.files['image']
         if uploaded_image.filename != "":
             uploaded_image.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_image.filename))
             file_name = uploaded_image.filename
-        data_manager.add_new_answer(submission_time, vote_number, question_id, message, file_name)
+        data_manager.add_new_answer(submission_time.strftime("%d-%B-%Y %H:%M:%S"), vote_number, question_id, message, file_name)
         return redirect("/display/" + question_id)
     return render_template("add_comment.html", question_id=question_id, list_questions=list_questions)
 
@@ -200,8 +201,8 @@ def add_answer_to_answer(answer_id=None, question_id=None):
     show_mess_only = data_manager.show_answer_mgs_only(question_id, answer_id)
     if request.method == "POST":
         message = request.form["message"]
-        submission_time = request.form["submission_time"]
-        data_manager.answer_to_answer(answer_id, question_id, message, submission_time)
+        submission_time = datetime.datetime.today()
+        data_manager.answer_to_answer(answer_id, question_id, message, submission_time.strftime("%d-%B-%Y %H:%M:%S"))
         return redirect("/display/" + question_id)
     return render_template("add_answer_comment.html", question_id=question_id, answer_id=answer_id,list_comments=list_comments, show_mess_only=show_mess_only)
 
