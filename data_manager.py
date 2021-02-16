@@ -165,6 +165,26 @@ def list_users(cursor:RealDictCursor) -> list:
 
 
 @database_common.connection_handler
+def find_user(cursor:RealDictCursor, name:list) -> list:
+    query = f"""
+        SELECT *
+        FROM users
+        WHERE username LIKE '{name}'
+    """
+    cursor.execute(query)
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def get_user_by_email(cursor, email):
+    query = """ SELECT * FROM "users"
+                WHERE email=%(email)s"""
+    params = {'email': email}
+    cursor.execute(query,params)
+    return cursor.fetchone()
+
+
+@database_common.connection_handler
 def list_tags(cursor:RealDictCursor) -> list:
     query = f"""
         SELECT name, id

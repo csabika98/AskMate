@@ -1,6 +1,6 @@
 from re import sub
 from typing import NamedTuple
-from flask import Flask, render_template, redirect, request, url_for, flash
+from flask import Flask, render_template, redirect, request, url_for, flash, session
 from flask.helpers import get_flashed_messages
 import database_common
 import psycopg2
@@ -10,13 +10,33 @@ import data_manager
 from werkzeug.utils import secure_filename
 import os
 import datetime
-
+import password_crypt
 
 UPLOAD_FOLDER = 'static/images/'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.secret_key = "test"
 
+@app.route('/login', methods=['POST'])
+def login():
+    session.pop('user',None)
+    session.pop('name',None)
+    user = data_manager.get_user_by_email(request.form['email'])
+    if user and password_crypt.verify_password(request.form['password'],user['password']):
+        session['id'] = user['id']
+        session['username'] = user['username']
+        return redirect(url_for("list_the_questions"))
+    else:
+        flash("Log in failed","red") # somehow this message doesn't even show ://///
+        return redirect(request.referrer)
+
+@app.route('/logout', methods=["GET","POST"])
+def logout():
+    session.pop('id',None)
+    session.pop('username',None)
+    flash("You have been successfully logged out!","green")
+    return redirect(url_for("list_the_questions"))
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -48,7 +68,7 @@ def list_the_questions():
     else:
         list_questions = data_manager.show_answers()
 
-    return render_template("index.html",list_tags=list_tags , list_questions=list_questions, all_tag=all_tag)
+    return render_template("index.html",list_tags=list_tags , list_questions=list_questions, all_tag=all_tag, session=session)
 
 
 @database_common.connection_handler

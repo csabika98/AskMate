@@ -88,11 +88,41 @@
 
                     <div class="col d-flex justify-content-end">
                         <div class="btn-group text-center" role="group" aria-label="loginGroup">
+                            {%if session["username"] is defined%}
+                            {{"Welcome!  " + session["username"]}}
+                            <form method="post" action="/logout">
+                                <button type="submit" class="btn btn-outline-secondary btn-sm">Log out</button>
+                            </form>
+                            {%else%}
                             <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" 
                             data-target="#register">Register</button>
                             <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" 
-                            data-target="#login">login</button>
-
+                            data-target="#login">Login</button>
+                            {%endif%}
+                             <!-- login -->
+        <div class="modal fade"
+        id="login"> 
+        <div class="modal-dialog"> 
+            <div class="modal-content"> 
+                <div class="modal-body ">
+                    <div class="padding container d-flex justify-content-center">
+                        <div class="col-md-10 col-md-offset-1">
+                            <form action="/login" method="post" class="register-form">
+                                <h2 class="text-center">Log in</h2>
+                                <hr>
+                                <div class="form-group"> <input type="email" id="email" name="email" class="form-control" placeholder="Email" required="required"> </div>
+                                <div class="form-group"> <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="required"> </div>
+                                <div class="form-group text-center"> <button type="submit" class="btn btn-secondary">Log In</button> </div>
+                            </form>
+                            {% if error %}
+                            <p class="error"><strong>Error:</strong> {{ error }}
+                          {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- end register form-->
                         </div>
                        
                     </div>
