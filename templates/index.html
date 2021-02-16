@@ -5,14 +5,14 @@
 
     {%endblock%}
 
-    {% block body%}
+    {% block body%} 
 
     {% with messages = get_flashed_messages() %}
     {% if messages %}
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>{{messages[0]}}</strong> Password or email typed incorrectly.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{messages[0]}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
     {% endif %}
     {% endwith %}
 
@@ -94,19 +94,23 @@
                         </div>
                     </div>
 
-                    <div class="col d-flex justify-content-end">
-                        <div class="btn-group text-center" role="group" aria-label="loginGroup">
+                    <div class="col d-flex justify-content-end align-items-center">
+
                             {%if session["username"] and session["password"] is defined%}
-                            {{"Welcome!  " + session["username"]}}
+                            <span class="badge bg-secondary" style="margin: 5px;">{{"Welcome!  " + session["username"]}}</span>   
+                             
                             <form method="post" action="/logout">
                                 <button type="submit" class="btn btn-outline-secondary btn-sm">Log out</button>
                             </form>
                             {%else%}
-                            <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" 
-                            data-target="#register">Register</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" 
-                            data-target="#login">Login</button>
+                                <div class="btn-group text-center" role="group" aria-label="loginGroup">
+                                <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" 
+                                data-target="#register">Register</button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" 
+                                data-target="#login">Login</button>
+                            </div>
                             {%endif%}
+                    </div>
                              <!-- login -->
         <div class="modal fade"
         id="login"> 
@@ -126,13 +130,10 @@
                     </div>
                 </div>
             </div>
-        </div>
-    <!-- end register form-->
-                        </div>
-                       
-                    </div>
 
-                </div>
+    <!-- end register form-->
+                        </div>          
+                    </div>
                 <!-- navigation buttons end-->
 
                     <div class="row search-body" >
