@@ -85,7 +85,7 @@
                     
                 <!-- navigation buttons-->
                 <div class="row">
-
+                    {%if session["username"] and session["password"] is defined%}
                     <div class="col">
                         <div class="btn-group text-center" role="group" aria-label="loginGroup">
                             <a href="/add_questions" style='text-align:center;'type="button" class="btn btn-outline-secondary btn-sm">Ask question</a>
@@ -93,7 +93,7 @@
                     
                         </div>
                     </div>
-
+                    {%endif%}
                     <div class="col d-flex justify-content-end align-items-center">
 
                             {%if session["username"] and session["password"] is defined%}

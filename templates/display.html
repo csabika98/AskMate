@@ -13,6 +13,7 @@
 {%for i in list_questions%}
 <section class="card mt-4"  style="margin: auto; width: 88%; margin-bottom: 2%;">
     <div class="border p-2">
+        {%if session["username"] and session["password"] is defined%}
         <a class="fas fa-chevron-up" href="/display/{{question_id}}/vote_up" role="button" style="text-decoration: none;"></a>
         {% if i.vote_number >= 5 %}
         <span style="margin: 5px;" class="badge rounded-pill bg-success">{{i.vote_number}}</span>
@@ -22,7 +23,7 @@
         <span style="margin: 5px;" class="badge rounded-pill bg-secondary">{{i.vote_number}}</span>
         {%endif%}
         <a class="fas fa-chevron-down" href="/display/{{question_id}}/vote_down" role="button" style="text-decoration: none;"></a>
-        
+        {%endif%}
         <!-- Question-->
         <div class="row m-0">
             <div>
