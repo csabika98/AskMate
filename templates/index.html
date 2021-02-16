@@ -85,7 +85,7 @@
                     
                 <!-- navigation buttons-->
                 <div class="row">
-                    {%if session["username"] and session["password"] is defined%}
+                    {%if session["username"] is defined%}
                     <div class="col">
                         <div class="btn-group text-center" role="group" aria-label="loginGroup">
                             <a href="/add_questions" style='text-align:center;'type="button" class="btn btn-outline-secondary btn-sm">Ask question</a>
@@ -96,7 +96,7 @@
                     {%endif%}
                     <div class="col d-flex justify-content-end align-items-center">
 
-                            {%if session["username"] and session["password"] is defined%}
+                            {%if session["username"] is defined%}
                             <span class="badge bg-secondary" style="margin: 5px;">{{"Welcome!  " + session["username"]}}</span>   
                              
                             <form method="post" action="/logout">
@@ -167,9 +167,9 @@
                                                     <td>
                                                         <div class="widget-26-job-title">
                                                             <a href="/display/{{item.id}}">{{item.title}}</a>
-                                                            <p class="m-0"><a class="employer-name text-decoration-none">userName</a> <span class="text-muted time">{{item.submission_time}}</span></p>
-                                                                                                                    <a href="/edit_questions/{{item.id}}" type="button" class="far fa-edit text-decoration-none"></a>
-                                                            <a href="/delete/{{item.id}}" type="button" class="fas fa-trash-alt text-decoration-none"></a>
+                                                            <p class="m-0"><a class="employer-name text-decoration-none">{{item.username}}</a> <span class="text-muted time">{{item.submission_time}}</span></p>
+                                                                                                                  {%if session["username"] == item.username%}  <a href="/edit_questions/{{item.id}}" type="button" class="far fa-edit text-decoration-none"></a>{%endif%}
+                                                                                                                  {%if session["username"] == item.username%}  <a href="/delete/{{item.id}}" type="button" class="fas fa-trash-alt text-decoration-none"></a>{%endif%}
                                                         </div>
                                                     </td>
                                                     <td>

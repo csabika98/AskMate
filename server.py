@@ -21,7 +21,7 @@ app.secret_key = "test"
 @app.route('/login', methods=['POST'])
 def login():
     session.pop('user',None)
-    session.pop('name',None)
+    session.pop('username',None)
     session.pop('password', None)
     user = data_manager.get_user_by_email(request.form['email'])
     user = data_manager.get_user_by_password(request.form["password"])
@@ -76,8 +76,8 @@ def list_the_questions():
 
 
 @database_common.connection_handler
-def create_question(cursor: RealDictCursor, primary_key:str , title: str, message: str, submission_time: str, vote_number: int, view_number: int, image:str) -> list:
-    cursor.execute("INSERT INTO question (id, title, message, submission_time, vote_number, view_number, image) VALUES (%s,%s,%s,%s, %s, %s, %s)", (primary_key, title, message, submission_time, vote_number, view_number, image))
+def create_question(cursor: RealDictCursor, primary_key:str , title: str, message: str, submission_time: str, vote_number: int, view_number: int, image:str, username:str) -> list:
+    cursor.execute("INSERT INTO question (id, title, message, submission_time, vote_number, view_number, image, username) VALUES (%s,%s,%s,%s, %s, %s, %s, %s)", (primary_key, title, message, submission_time, vote_number, view_number, image, username))
 
 @database_common.connection_handler
 def add_tag(cursor: RealDictCursor, question_id: str, tag_id: str) -> list:
@@ -102,6 +102,7 @@ def add_questions():
         mess = request.form.get("message")
         sub_time = request.form.get("submission_time")
         file_name = "default.png"
+        username = session["username"]
         uploaded_image = request.files['image']
         if uploaded_image.filename != "":
             uploaded_image.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_image.filename))
@@ -109,7 +110,7 @@ def add_questions():
         tags = request.form["tags"]
         vot_num = 0
         view_num = 0
-        create_question(prima_key , tit, mess, sub_time, vot_num, view_num, file_name)
+        create_question(prima_key , tit, mess, sub_time, vot_num, view_num, file_name, username)
         add_tag(prima_key, tags)
 
         return redirect("/")
