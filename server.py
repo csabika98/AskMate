@@ -35,7 +35,7 @@ def login():
 def logout():
     session.pop('id',None)
     session.pop('username',None)
-    flash("You have been successfully logged out!","green")
+    flash("You have been successfully logged out!","green") # somehow this message doesn't even show ://///
     return redirect(url_for("list_the_questions"))
 
 
