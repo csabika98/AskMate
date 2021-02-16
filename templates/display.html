@@ -79,8 +79,10 @@
 
                         </a>
                     </li>
+                    {%if session["username"] and session["password"] is defined%}
                     <li class="list-group-item flex-fill text-center p-0 px-lg-2 border border-right-0 border-top-0 border-bottom-0 ">
                         <a href="/comments/add/{{question_id}}" style='text-align:center;'type="button" class=" fas fa-reply text-decoration-none">Answer question</a>
+                        {%endif%}
                     </li>
                 </ul>
             </div>
