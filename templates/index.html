@@ -88,7 +88,7 @@
 
                     <div class="col d-flex justify-content-end">
                         <div class="btn-group text-center" role="group" aria-label="loginGroup">
-                            {%if session["username"] is defined%}
+                            {%if session["username"] and session["password"] is defined%}
                             {{"Welcome!  " + session["username"]}}
                             <form method="post" action="/logout">
                                 <button type="submit" class="btn btn-outline-secondary btn-sm">Log out</button>
@@ -114,9 +114,6 @@
                                 <div class="form-group"> <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="required"> </div>
                                 <div class="form-group text-center"> <button type="submit" class="btn btn-secondary">Log In</button> </div>
                             </form>
-                            {% if error %}
-                            <p class="error"><strong>Error:</strong> {{ error }}
-                          {% endif %}
                         </div>
                     </div>
                 </div>

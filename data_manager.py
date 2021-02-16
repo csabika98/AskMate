@@ -183,6 +183,14 @@ def get_user_by_email(cursor, email):
     cursor.execute(query,params)
     return cursor.fetchone()
 
+@database_common.connection_handler
+def get_user_by_password(cursor, password):
+    query = """ SELECT * FROM "users"
+                WHERE password=%(password)s"""
+    params = {'password': password}
+    cursor.execute(query,params)
+    return cursor.fetchone()
+
 
 @database_common.connection_handler
 def list_tags(cursor:RealDictCursor) -> list:

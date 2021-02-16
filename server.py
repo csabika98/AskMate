@@ -22,9 +22,13 @@ app.secret_key = "test"
 def login():
     session.pop('user',None)
     session.pop('name',None)
+    session.pop('password', None)
     user = data_manager.get_user_by_email(request.form['email'])
+    user = data_manager.get_user_by_password(request.form["password"])
+    user_pass = data_manager.get_user_by_password(request.form['password'])
     if user and password_crypt.verify_password(request.form['password'],user['password']):
         session['id'] = user['id']
+        session['password'] = user['password']
         session['username'] = user['username']
         return redirect(url_for("list_the_questions"))
     else:
