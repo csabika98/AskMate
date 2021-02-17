@@ -57,8 +57,11 @@ def list_the_questions():
         password = request.form.get("password")
         email = request.form.get("email")
         regdate = datetime.datetime.today()
-        if username in user or email in emails:
-            flash("User or email already exist!")
+        if username in user:
+            flash("Username already exist!")
+            return redirect("/")
+        elif email in emails:
+            flash("email already exist!")
             return redirect("/")
         else:
             data_manager.add_new_user(username, password, email, regdate.strftime("%d-%B-%Y %H:%M:%S"))
