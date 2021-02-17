@@ -24,14 +24,17 @@ def login():
     session.pop('username',None)
     session.pop('email',None)
     session.pop("password", None)
-    email = data_manager.get_user_by_email(request.form['email'])
-    user = data_manager.get_user_by_password(request.form["password"])
-    user_pass = data_manager.get_user_by_password(request.form['password'])
-    if email and password_crypt.verify_password(request.form['password'],user_pass['password']):
-        session['id'] = user['id']
-        session['password'] = user['password']
-        session['username'] = user['username']
-        session["email"] = user["email"]
+    user = data_manager.get_user_by_email_and_pass(request.form['email'],request.form["password"])
+    password = ''
+    for _ in user:
+        password = _["password"]
+
+    if user and password_crypt.verify_password(request.form['password'],password):
+        for _ in user:
+            session['id'] = _['id']
+            session['password'] = _['password']
+            session['username'] = _['username']
+            session["email"] = _["email"]
         return redirect(url_for("list_the_questions"))
     else:
         flash("Log in failed","red") # somehow this message doesn't even show ://///
@@ -49,9 +52,13 @@ def logout():
 
 @app.route("/", methods=["GET", "POST"])
 def list_the_questions():
+    today = datetime.datetime.now()
+    current_date = today.strftime("%Y-%m-%d")
+
     emails = data_manager.check_for_email()
     user = data_manager.check_users()
     list_questions = data_manager.show_answers()
+
     if request.method == "POST":
         username = request.form.get("username") # need to add the HTML side FORM NAME/ID
         password = request.form.get("password")
@@ -86,7 +93,7 @@ def list_the_questions():
     else:
         list_questions = data_manager.show_answers()
 
-    return render_template("index.html",list_tags=list_tags , list_questions=list_questions, all_tag=all_tag, session=session)
+    return render_template("index.html" ,list_tags=list_tags , list_questions=list_questions, all_tag=all_tag, session=session, current_date=current_date)
 
 
 @database_common.connection_handler
@@ -199,8 +206,7 @@ def display_list(question_id=None, comment_id=None):
     list_tags = data_manager.load_tags(question_id)
     list_comment = data_manager.show_comment(question_id)
     list_questions = data_manager.show_answer(question_id)
-    if request.method == "POST":
-        data_manager.update_view(question_id)
+    data_manager.update_view(question_id)
   
     return render_template("display.html",list_tags=list_tags, question_id=question_id, comment_id=comment_id, list_comments=list_comment, list_questions=list_questions, nested_comment=list_nested_comments)
 

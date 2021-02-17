@@ -14,7 +14,7 @@
 
     {%endblock%}
 
-    {% block body%} 
+    {% block body%}
 
     {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -35,10 +35,10 @@
                                 <form action="/" method="post" class="register-form">
                                     <h2 class="text-center">Register</h2>
                                     <hr>
-                                    <div class="form-group"> <input type="email" id="email" name="email" class="form-control" placeholder="Email Address" required="required"> </div>
-                                    <div class="form-group"> <input type="text" id="username" name="username" class="form-control" placeholder="User Name" required="required"> </div>
-                                    <div class="form-group"> <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="required"> </div>
-                                    <div class="form-group text-center"> <button type="submit" class="btn btn-secondary">register</button> </div>
+                                    <div class="form-group" style="margin-top: 5px;"> <input type="email" id="email" name="email" class="form-control" placeholder="Email Address" required="required"> </div>
+                                    <div class="form-group" style="margin-top: 5px;"> <input type="text" id="username" name="username" class="form-control" placeholder="User Name" required="required"> </div>
+                                    <div class="form-group" style="margin-top: 5px;"> <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="required"> </div>
+                                    <div class="form-group text-center"style="margin-top: 5px;"> <button type="submit" class="btn btn-secondary">register</button> </div>
                                 </form>
                             </div>
                         </div>
@@ -135,18 +135,18 @@
                             <form action="/login" method="post" class="register-form">
                                 <h2 class="text-center">Log in</h2>
                                 <hr>
-                                <div class="form-group"> <input type="email" id="email" name="email" class="form-control" placeholder="Email" required="required"> </div>
-                                <div class="form-group"> <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="required"> </div>
-                                <div class="form-group text-center"> <button type="submit" class="btn btn-secondary">Log In</button> </div>
+                                <div class="form-group" style="margin-top: 5px;"> <input type="email" id="email" name="email" class="form-control" placeholder="Email" required="required"> </div>
+                                <div class="form-group"style="margin-top: 5px;"> <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="required"> </div>
+                                <div class="form-group text-center" style="margin-top: 5px;"> <button type="submit" class="btn btn-secondary">Log In</button>
+                                </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-
-    <!-- end register form-->
-                        </div>          
-                    </div>
+        </div>
+    </div>
+    <!-- end login form-->        
                 <!-- navigation buttons end-->
 
                     <div class="row search-body" >
@@ -160,6 +160,7 @@
                                                     <span>Sort By:</span>                                                    
                                                     <form action="/">
                                                     <select class="form-control border-0" name="sort-option" onchange="this.form.submit()">
+                                                        <option value="most-view" selected disabled>Select filter</option>
                                                         <option value="most-view">Most viewed</option>
                                                         <option value="most-upvote">Most upvoted</option>
                                                         <option value="least-upvote">Least upvoted</option>
@@ -176,10 +177,15 @@
                                         <table class="table widget-26" >
                                             <tbody>
                                                 {%for item in list_questions%}
+
                                                 <tr>
                                                     <td>
                                                         <div class="widget-26-job-title">
+                                                            {%if item.submission_time == current_date%}
+                                                            <a href="/display/{{item.id}}">{{item.title}} NEW</a>
+                                                            {%else%}
                                                             <a href="/display/{{item.id}}">{{item.title}}</a>
+                                                            {%endif%}
                                                             <p class="m-0"><a class="employer-name text-decoration-none">{{item.username}}</a> <span class="text-muted time">{{item.submission_time}}</span></p>
                                                                                                                   {%if session["username"] == item.username%}  <a href="/edit_questions/{{item.id}}" type="button" class="far fa-edit text-decoration-none"></a>{%endif%}
                                                                                                                   {%if session["username"] == item.username%}  <a href="/delete/{{item.id}}" type="button" class="fas fa-trash-alt text-decoration-none"></a>{%endif%}

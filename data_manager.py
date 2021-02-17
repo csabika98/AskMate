@@ -228,20 +228,20 @@ def find_user(cursor:RealDictCursor, name:list) -> list:
 
 
 @database_common.connection_handler
-def get_user_by_email(cursor, email):
-    query = """ SELECT * FROM "users"
-                WHERE email=%(email)s"""
-    params = {'email': email}
-    cursor.execute(query,params)
-    return cursor.fetchone()
+def get_user_by_email_and_pass(cursor:RealDictCursor, email, password) -> list:
 
-@database_common.connection_handler
-def get_user_by_password(cursor, password):
-    query = """ SELECT * FROM "users"
-                WHERE password=%(password)s"""
-    params = {'password': password}
-    cursor.execute(query,params)
-    return cursor.fetchone()
+    #query = """ SELECT * FROM "users"
+    #            WHERE email=%(email)s"""
+    #params = {'email': email}
+
+    query = f"""
+            SELECT *
+            FROM users
+            WHERE email = '{email}' AND password = '{password}'
+    """
+    cursor.execute(query)
+    return cursor.fetchall()
+
 
 
 @database_common.connection_handler
