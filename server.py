@@ -121,7 +121,7 @@ def add_questions():
     if request.method == "POST":
         tit = request.form.get("title")
         mess = request.form.get("message")
-        sub_time = datetime.datetime.now().strftime("%y/%m/%d, %H:%M:%S")
+        sub_time = datetime.datetime.now().strftime("%d-%B-%Y %H:%M:%S")
         file_name = "default.png"
         username = session["username"]
         data_manager.increment_questions(username, False)
