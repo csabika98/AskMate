@@ -49,14 +49,19 @@ def logout():
 
 @app.route("/", methods=["GET", "POST"])
 def list_the_questions():
+    user = data_manager.check_users()
     list_questions = data_manager.show_answers()
     if request.method == "POST":
         username = request.form.get("username") # need to add the HTML side FORM NAME/ID
         password = request.form.get("password")
         email = request.form.get("email")
         regdate = datetime.datetime.today()
-        data_manager.add_new_user(username, password, email, regdate.strftime("%d-%B-%Y %H:%M:%S"))
-        return redirect("/")
+        if username in user:
+            raise ValueError("user alredy exist!")
+        else:
+            data_manager.add_new_user(username, password, email, regdate.strftime("%d-%B-%Y %H:%M:%S"))
+            return redirect("/")
+
     list_id = data_manager.show_id()
     list_tags = data_manager.list_all_tags(list_id)
     all_tag = data_manager.list_tags()

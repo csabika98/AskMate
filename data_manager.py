@@ -57,6 +57,22 @@ def modify_database(query, tuple_parameters=None):
         print(exception)
 
 
+def check_users():
+    connection = psycopg2.connect('askmate', check_same_thread = False)
+    cursor = connection.cursor()
+    cursor.execute(""" SELECT username FROM users ORDER BY pk DESC;""".format(username = username))
+    db_users = cursor.fetcall()
+    users = []
+
+    for i in range(len(db_users)):
+        person = db_users[i][0]
+        users.append(person)
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return users
 
 
 def add_new_answer(submission_time, vote_number, question_id, message, image):
