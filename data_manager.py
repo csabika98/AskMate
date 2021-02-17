@@ -58,10 +58,11 @@ def modify_database(query, tuple_parameters=None):
 
 
 def check_users():
-    connection = psycopg2.connect('askmate', check_same_thread = False)
+    connect_str = "dbname='askmate' user='postgres' host='localhost' password='derank123'"
+    connection = psycopg2.connect(connect_str)
     cursor = connection.cursor()
-    cursor.execute(""" SELECT username FROM users ORDER BY pk DESC;""".format(username = username))
-    db_users = cursor.fetcall()
+    cursor.execute(""" SELECT username FROM users ORDER BY id DESC;""")
+    db_users = cursor.fetchall()
     users = []
 
     for i in range(len(db_users)):
@@ -73,6 +74,26 @@ def check_users():
     connection.close()
 
     return users
+
+
+def check_for_email():
+    connect_str = "dbname='askmate' user='postgres' host='localhost' password='derank123'"
+    connection = psycopg2.connect(connect_str)
+    cursor = connection.cursor()
+    cursor.execute(""" SELECT email FROM users ORDER BY id DESC;""")
+    db_users = cursor.fetchall()
+    email = []
+
+    for i in range(len(db_users)):
+        person = db_users[i][0]
+        email.append(person)
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return email
+
 
 
 def add_new_answer(submission_time, vote_number, question_id, message, image):

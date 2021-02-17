@@ -49,6 +49,7 @@ def logout():
 
 @app.route("/", methods=["GET", "POST"])
 def list_the_questions():
+    emails = data_manager.check_for_email()
     user = data_manager.check_users()
     list_questions = data_manager.show_answers()
     if request.method == "POST":
@@ -56,8 +57,9 @@ def list_the_questions():
         password = request.form.get("password")
         email = request.form.get("email")
         regdate = datetime.datetime.today()
-        if username in user:
-            raise ValueError("user alredy exist!")
+        if username in user or email in emails:
+            flash("User or email already exist!")
+            return redirect("/")
         else:
             data_manager.add_new_user(username, password, email, regdate.strftime("%d-%B-%Y %H:%M:%S"))
             return redirect("/")

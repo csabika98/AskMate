@@ -4,7 +4,7 @@ import psycopg2
 import psycopg2.extras
 
 os.environ['PSQL_USER_NAME'] = 'postgres'
-os.environ['PSQL_PASSWORD'] = 'bubukA05'
+os.environ['PSQL_PASSWORD'] = 'derank123'
 os.environ['PSQL_HOST'] = 'localhost'
 os.environ['PSQL_DB_NAME'] = 'askmate'
 
