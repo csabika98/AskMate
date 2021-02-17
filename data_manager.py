@@ -58,7 +58,7 @@ def modify_database(query, tuple_parameters=None):
 
 
 def check_users():
-    connect_str = "dbname='askmate' user='postgres' host='localhost' password='derank123'"
+    connect_str = "dbname='askmate' user='postgres' host='localhost' password='nobles32'"
     connection = psycopg2.connect(connect_str)
     cursor = connection.cursor()
     cursor.execute(""" SELECT username FROM users ORDER BY id DESC;""")
@@ -77,7 +77,7 @@ def check_users():
 
 
 def check_for_email():
-    connect_str = "dbname='askmate' user='postgres' host='localhost' password='derank123'"
+    connect_str = "dbname='askmate' user='postgres' host='localhost' password='nobles32'"
     connection = psycopg2.connect(connect_str)
     cursor = connection.cursor()
     cursor.execute(""" SELECT email FROM users ORDER BY id DESC;""")
@@ -96,10 +96,10 @@ def check_for_email():
 
 
 
-def add_new_answer(submission_time, vote_number, question_id, message, image):
+def add_new_answer(submission_time, vote_number, question_id, message, image, user_name):
     """Adds a new answer to a question"""
-    modify_database("""INSERT INTO answer(submission_time, vote_number, question_id, message, image) VALUES
-                    (%s, %s, %s, %s, %s); """, (submission_time, vote_number, question_id, message, image))
+    modify_database("""INSERT INTO answer(submission_time, vote_number, question_id, message, image, user_name) VALUES
+                    (%s, %s, %s, %s, %s, %s); """, (submission_time, vote_number, question_id, message, image, user_name))
 
 def add_new_user(username:str, password:str,email:str, regdate:str):
     """Adding new users to our AskMate"""
@@ -112,9 +112,9 @@ def edit_questions(image, submission_time, message, question_id, title):
 def edit_profile_page(username:str, password:str, email:str, id:str)->list:
     fetch_database("""UPDATE users SET username=%s, password=%s, email=%s WHERE id= %s""",(username, password, email, id))
 
-def answer_to_answer(answer_id,question_id, message, submission_time):
+def answer_to_answer(answer_id,question_id, message, submission_time, user_name):
     """Write new answer to an existing answer"""
-    modify_database("""INSERT INTO comment(answer_id, question_id, message, submission_time) VALUES (%s, %s, %s, %s); """, (answer_id, question_id ,message,submission_time))
+    modify_database("""INSERT INTO comment(answer_id, question_id, message, submission_time, user_name) VALUES (%s, %s, %s, %s, %s); """, (answer_id, question_id ,message,submission_time, user_name))
 
 
 @database_common.connection_handler
