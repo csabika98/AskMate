@@ -1,4 +1,5 @@
 from typing import List, Dict
+from flask.globals import session
 import psycopg2
 import psycopg2.extras
 from psycopg2.extras import RealDictConnection, RealDictCursor 
@@ -71,6 +72,8 @@ def edit_questions(image, submission_time, message, question_id, title):
     """Modify the questions"""
     modify_database("""UPDATE question SET image=%s, submission_time=%s, message=%s, title=%s WHERE id = %s; """, (image, submission_time, message, title, question_id))
 
+def edit_profile_page(username:str, password:str, email:str, id:str)->list:
+    fetch_database("""UPDATE users SET username=%s, password=%s, email=%s WHERE id= %s""",(username, password, email, id))
 
 def answer_to_answer(answer_id,question_id, message, submission_time):
     """Write new answer to an existing answer"""
@@ -163,6 +166,18 @@ def list_users(cursor:RealDictCursor) -> list:
     cursor.execute(query)
     return cursor.fetchall()
 
+
+@database_common.connection_handler
+def users_id(cursor:RealDictCursor) -> list:
+    query = f"""
+        SELECT id
+        FROM users
+        WHERE username = '{session["username"]}'
+    """
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    for row in rows:
+        row["id"]
 
 @database_common.connection_handler
 def find_user(cursor:RealDictCursor, name:list) -> list:

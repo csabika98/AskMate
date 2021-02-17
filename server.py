@@ -20,9 +20,10 @@ app.secret_key = "test"
 
 @app.route('/login', methods=['POST'])
 def login():
-    session.pop('user',None)
+    session.pop('id',None)
     session.pop('username',None)
-    session.pop('password', None)
+    session.pop('email',None)
+    session.pop("password", None)
     user = data_manager.get_user_by_email(request.form['email'])
     user = data_manager.get_user_by_password(request.form["password"])
     user_pass = data_manager.get_user_by_password(request.form['password'])
@@ -30,6 +31,7 @@ def login():
         session['id'] = user['id']
         session['password'] = user['password']
         session['username'] = user['username']
+        session["email"] = user["email"]
         return redirect(url_for("list_the_questions"))
     else:
         flash("Log in failed","red") # somehow this message doesn't even show ://///
@@ -39,6 +41,8 @@ def login():
 def logout():
     session.pop('id',None)
     session.pop('username',None)
+    session.pop('email',None)
+    session.pop("password", None)
     flash("You have been successfully logged out!","green") # somehow this message doesn't even show ://///
     return redirect(url_for("list_the_questions"))
 
@@ -86,7 +90,6 @@ def add_tag(cursor: RealDictCursor, question_id: str, tag_id: str) -> list:
 @database_common.connection_handler
 def update_tag(cursor: RealDictCursor, question_id: str, tag_id: str) -> list:
     cursor.execute("""UPDATE question_tag SET question_id = %s, tag_id = %s WHERE question_id = %s""", (question_id,tag_id,question_id))
-
 
 @app.route("/users")
 def list_users():
@@ -137,6 +140,28 @@ def edit_questions(question_id=None):
         update_tag(question_id, tag)
         return redirect("/")
     return render_template('edit_questions.html', question_id=question_id,list_tags=list_tags , list_question=list_question, list_title=list_title, list_msg=list_msg)
+
+
+@app.route("/edit_profile/", methods=["GET", "POST"])
+def edit_profiles():
+    list_the_users = data_manager.list_users()
+    if request.method == "GET":
+        user_id = session["id"]
+        username = request.args.get("username")
+        password = request.args.get("password") 
+        email = request.args.get("email")
+        #uploaded_image = request.files['image']
+        #file_name = uploaded_image.filename
+        #f uploaded_image.filename != "":
+        #    uploaded_image.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_image.filename))
+        data_manager.edit_profile_page(username, password, email,user_id)
+        session.pop('id',None)
+        session.pop('username',None)
+        session.pop('email',None)
+        session.pop("password", None)
+        flash("You have changed your login info Please login again with your new data!","green") # somehow this message doesn't even show ://///
+        return redirect("/")
+    return render_template('edit_profile.html',list_the_users=list_the_users)
 
 
 @app.route("/display/<question_id>/vote_up/", methods=["GET", "POST"])
