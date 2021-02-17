@@ -26,8 +26,7 @@ def login():
     session.pop("password", None)
     email = data_manager.get_user_by_email(request.form['email'])
     user = data_manager.get_user_by_password(request.form["password"])
-    user_pass = data_manager.get_user_by_password(request.form['password'])
-    if email and password_crypt.verify_password(request.form['password'],user_pass['password']):
+    if email and password_crypt.verify_password(request.form['password'],user['password']):
         session['id'] = user['id']
         session['password'] = user['password']
         session['username'] = user['username']
