@@ -124,7 +124,7 @@ def add_questions():
         sub_time = datetime.datetime.now().strftime("%y/%m/%d, %H:%M:%S")
         file_name = "default.png"
         username = session["username"]
-        data_manager.increment_questions(username)
+        data_manager.increment_questions(username, False)
         uploaded_image = request.files['image']
         if uploaded_image.filename != "":
             uploaded_image.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_image.filename))
