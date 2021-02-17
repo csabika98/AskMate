@@ -161,6 +161,7 @@
                                                     <form action="/">
                                                     <select class="form-control border-0" name="sort-option" onchange="this.form.submit()">
                                                         <option value="most-view" selected disabled>Select filter</option>
+                                                        <option value="most-recent">Newest questions</option>
                                                         <option value="most-view">Most viewed</option>
                                                         <option value="most-upvote">Most upvoted</option>
                                                         <option value="least-upvote">Least upvoted</option>
@@ -181,10 +182,10 @@
                                                 <tr>
                                                     <td>
                                                         <div class="widget-26-job-title">
-                                                            {%if item.submission_time == current_date%}
-                                                            <a href="/display/{{item.id}}">{{item.title}} NEW</a>
+                                                            {%if item.submission_time.strftime('%Y-%m-%d')  == current_date%}
+                                                            <a class="text-decoration-none" href="/display/{{item.id}}">{{item.title}} <span class="badge rounded-pill bg-dark">New</span></a>
                                                             {%else%}
-                                                            <a href="/display/{{item.id}}">{{item.title}}</a>
+                                                            <a class="text-decoration-none" href="/display/{{item.id}}">{{item.title}}</a>
                                                             {%endif%}
                                                             <p class="m-0"><a class="employer-name text-decoration-none">{{item.username}}</a> <span class="text-muted time">{{item.submission_time}}</span></p>
                                                                                                                   {%if session["username"] == item.username%}  <a href="/edit_questions/{{item.id}}" type="button" class="far fa-edit text-decoration-none"></a>{%endif%}

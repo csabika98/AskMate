@@ -120,9 +120,10 @@ def add_questions():
     if request.method == "POST":
         tit = request.form.get("title")
         mess = request.form.get("message")
-        sub_time = request.form.get("submission_time")
+        sub_time = datetime.datetime.now().strftime("%y/%m/%d, %H:%M:%S")
         file_name = "default.png"
         username = session["username"]
+        data_manager.increment_questions(username)
         uploaded_image = request.files['image']
         if uploaded_image.filename != "":
             uploaded_image.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_image.filename))
@@ -215,6 +216,8 @@ def display_list(question_id=None, comment_id=None):
 def delete_answer(comment_id=None):
     if request.method == "GET":
         data_manager.delete_comment(comment_id)
+        user_name = session["username"]
+        data_manager.increment_answers(user_name, True)
         return redirect(request.referrer)
     return render_template("display.html", comment_id=comment_id)
 
@@ -223,7 +226,9 @@ def delete_answer(comment_id=None):
 def delete(question_id=None):
 
     if request.method == "GET":
+        user_name = session["username"]
         data_manager.delete_question(question_id)
+        data_manager.increment_questions(user_name, True)
         return redirect("/")
     return render_template("index.html", question_id=question_id)
 
@@ -246,6 +251,7 @@ def add_comments(question_id=None):
         file_name = "default.png"
         user_name = session["username"]
         uploaded_image = request.files['image']
+        data_manager.increment_answers(user_name,False)
         if uploaded_image.filename != "":
             uploaded_image.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_image.filename))
             file_name = uploaded_image.filename
@@ -270,6 +276,7 @@ def add_answer_to_answer(answer_id=None, question_id=None):
         message = request.form["message"]
         user_name = session["username"]
         submission_time = datetime.datetime.today()
+        data_manager.increment_comments(user_name, False)
         data_manager.answer_to_answer(answer_id, question_id, message, submission_time.strftime("%d-%B-%Y %H:%M:%S"), user_name)
         return redirect("/display/" + question_id)
     return render_template("add_answer_comment.html", question_id=question_id, answer_id=answer_id,list_comments=list_comments, show_mess_only=show_mess_only)

@@ -6,9 +6,7 @@
         {%endfor%}
     {%endblock%}
 
-    {% block body%}
-
-
+{% block body%}
 
 {%for i in list_questions%}
 <section class="card mt-4"  style="margin: auto; width: 88%; margin-bottom: 2%;">
@@ -121,7 +119,7 @@
 
                     </div>
                     {%if session["username"] and session["password"] is defined%}
-                    {% if session["username"] == item.username%}
+                    {% if session["username"] != item.user_name%}
                     <div class="col-md-auto">
                         <a style="text-decoration: none;" href="/comments/{{item.id}}/{{question_id}}/add/"><i class="fa fa-reply"></i></a>
                         <a style="text-decoration: none;" href="/display/{{item.id}}/delete"><i class="fas fa-trash-alt"></i></a>

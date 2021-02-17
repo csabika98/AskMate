@@ -338,10 +338,17 @@ def show_answers(cursor: RealDictCursor, order: str=None) -> list:
             FROM question
             ORDER BY vote_number DESC
         """
+    elif order == 'most-recent':
+        query = f"""
+            SELECT *
+            FROM question
+            ORDER BY submission_time DESC
+        """
     else:
         query = f"""
             SELECT *
             FROM question
+            ORDER BY title DESC
         """
     cursor.execute(query)
     return cursor.fetchall()
@@ -356,6 +363,57 @@ def show_comment(cursor: RealDictCursor, question_id: int) -> list:
     """
     cursor.execute(query)
     return cursor.fetchall()
+
+@database_common.connection_handler
+def increment_questions(cursor: RealDictCursor, username: str, isDelete: bool):
+    if isDelete:
+        query = f"""
+            UPDATE users 
+            SET question = question - 1
+            WHERE username = '{username}'
+            """
+    else:
+        query = f"""
+            UPDATE users 
+            SET question = question + 1
+            WHERE username = '{username}'
+        """
+
+    cursor.execute(query)
+
+@database_common.connection_handler
+def increment_answers(cursor: RealDictCursor, username: str, isDelete: bool):
+    if isDelete:
+        query = f"""
+            UPDATE users 
+            SET answers = answers - 1
+            WHERE username = '{username}'
+            """
+    else:
+        query = f"""
+            UPDATE users 
+            SET answers = answers + 1
+            WHERE username = '{username}'
+        """
+
+    cursor.execute(query)
+
+@database_common.connection_handler
+def increment_comments(cursor: RealDictCursor, username: str, isDelete: bool):
+    if isDelete:
+        query = f"""
+            UPDATE users 
+            SET comments = comments - 1
+            WHERE username = '{username}'
+            """
+    else:
+        query = f"""
+            UPDATE users 
+            SET comments = comments + 1
+            WHERE username = '{username}'
+        """
+
+    cursor.execute(query)
 
 @database_common.connection_handler
 def update_view(cursor: RealDictCursor, question_id: str) -> list:

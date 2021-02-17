@@ -18,6 +18,7 @@
                 <th scope="col">Questions asked</th>
                 <th scope="col">Questions answered</th>
                 <th scope="col">Comments</th>
+                <th scope="col">Reputation</th>
             </tr>
 
             </thead>
@@ -28,6 +29,10 @@
                 <td>{{item.username}}</td>
                 <td>{{item.email}}</td>
                 <td>{{item.regdate}}</td>
+                <td>{{item.question}}</td>
+                <td>{{item.answers}}</td>
+                <td>{{item.comments}}</td>
+                <td>{{item.rep}}</td>
             </tr>
             {%endfor%}
 
