@@ -97,6 +97,7 @@
 	    <div class="card-body">      
 	        <div class="row">
         	    <div class="col-md-2">	
+                    {%if session["username"] and session["password"] is defined%}
                     <a class="fas fa-chevron-up" href="/comments/{{question_id}}/{{item.id}}/vote_up" role="button" style="text-decoration: none;"></a>
                     {% if item.vote_number >= 5 %}
                     <span style="margin: 5px;" class="badge rounded-pill bg-success">{{item.vote_number}}</span>
@@ -105,9 +106,10 @@
                     {%else%}
                     <span style="margin: 5px;" class="badge rounded-pill bg-secondary">{{item.vote_number}}</span>
                     {%endif%}
-
+                    
                     <a class="fas fa-chevron-down" href="/comments/{{question_id}}/{{item.id}}/vote_down" role="button" style="text-decoration: none;"></a>
-        	    </div>
+                    {%endif%}
+                </div>
                 <div class="row">
                     <div class="col-3">
                         <img src="https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png" width="50" height="50"/>
@@ -118,10 +120,14 @@
                         <p>{{item.message}}</p>
 
                     </div>
+                    {%if session["username"] and session["password"] is defined%}
+                    {% if session["username"] == item.username%}
                     <div class="col-md-auto">
                         <a style="text-decoration: none;" href="/comments/{{item.id}}/{{question_id}}/add/"><i class="fa fa-reply"></i></a>
                         <a style="text-decoration: none;" href="/display/{{item.id}}/delete"><i class="fas fa-trash-alt"></i></a>
                     </div>
+                    {%endif%}
+                    {%endif%}
                 </div>
 
 
