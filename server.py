@@ -24,10 +24,10 @@ def login():
     session.pop('username',None)
     session.pop('email',None)
     session.pop("password", None)
-    user = data_manager.get_user_by_email(request.form['email'])
+    email = data_manager.get_user_by_email(request.form['email'])
     user = data_manager.get_user_by_password(request.form["password"])
     user_pass = data_manager.get_user_by_password(request.form['password'])
-    if user and password_crypt.verify_password(request.form['password'],user['password']):
+    if email and password_crypt.verify_password(request.form['password'],user_pass['password']):
         session['id'] = user['id']
         session['password'] = user['password']
         session['username'] = user['username']
@@ -120,7 +120,7 @@ def add_questions():
         if uploaded_image.filename != "":
             uploaded_image.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_image.filename))
             file_name = uploaded_image.filename
-        tags = request.form["tags"]
+        tags = request.form["tags"]    
         vot_num = 0
         view_num = 0
         create_question(prima_key , tit, mess, sub_time, vot_num, view_num, file_name, username)
@@ -238,11 +238,12 @@ def add_comments(question_id=None):
         submission_time = datetime.datetime.today()
         vote_number = 0
         file_name = "default.png"
+        user_name = session["username"]
         uploaded_image = request.files['image']
         if uploaded_image.filename != "":
             uploaded_image.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_image.filename))
             file_name = uploaded_image.filename
-        data_manager.add_new_answer(submission_time.strftime("%d-%B-%Y %H:%M:%S"), vote_number, question_id, message, file_name)
+        data_manager.add_new_answer(submission_time.strftime("%d-%B-%Y %H:%M:%S"), vote_number, question_id, message, file_name, user_name)
         return redirect("/display/" + question_id)
     return render_template("add_comment.html", question_id=question_id, list_questions=list_questions)
 
@@ -261,8 +262,9 @@ def add_answer_to_answer(answer_id=None, question_id=None):
     show_mess_only = data_manager.show_answer_mgs_only(question_id, answer_id)
     if request.method == "POST":
         message = request.form["message"]
+        user_name = session["username"]
         submission_time = datetime.datetime.today()
-        data_manager.answer_to_answer(answer_id, question_id, message, submission_time.strftime("%d-%B-%Y %H:%M:%S"))
+        data_manager.answer_to_answer(answer_id, question_id, message, submission_time.strftime("%d-%B-%Y %H:%M:%S"), user_name)
         return redirect("/display/" + question_id)
     return render_template("add_answer_comment.html", question_id=question_id, answer_id=answer_id,list_comments=list_comments, show_mess_only=show_mess_only)
 
