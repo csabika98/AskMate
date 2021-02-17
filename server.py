@@ -68,9 +68,10 @@ def list_the_questions():
             flash("Username already exist!")
             return redirect("/")
         elif email in emails:
-            flash("email already exist!")
+            flash("Email already exist!")
             return redirect("/")
         else:
+            flash("Registration completed! You can log in now!")
             data_manager.add_new_user(username, password, email, regdate.strftime("%d-%B-%Y %H:%M:%S"))
             return redirect("/")
 

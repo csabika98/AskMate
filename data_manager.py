@@ -58,7 +58,7 @@ def modify_database(query, tuple_parameters=None):
 
 
 def check_users():
-    connect_str = "dbname='askmate' user='postgres' host='localhost' password='nobles32'"
+    connect_str = "dbname='askmate' user='postgres' host='localhost' password='derank123'"
     connection = psycopg2.connect(connect_str)
     cursor = connection.cursor()
     cursor.execute(""" SELECT username FROM users ORDER BY id DESC;""")
@@ -77,7 +77,7 @@ def check_users():
 
 
 def check_for_email():
-    connect_str = "dbname='askmate' user='postgres' host='localhost' password='nobles32'"
+    connect_str = "dbname='askmate' user='postgres' host='localhost' password='derank123'"
     connection = psycopg2.connect(connect_str)
     cursor = connection.cursor()
     cursor.execute(""" SELECT email FROM users ORDER BY id DESC;""")
