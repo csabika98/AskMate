@@ -35,11 +35,16 @@
                     </div>   
                     {%endif%}
                 </div>
-
                 <div class="col-md-auto" style="padding: 0%;">
                     {%for usr in list_usr%}
                     {%if usr.username == i.username%}
-                    <img src="/static/images/{{usr.image}}" width="50" height="50"/>
+                    <picture>
+                    {% if usr.image == 'NONE' %}
+                    <img  src="/static/images/{{usr.image}}" class="rounded-circle" width="50" height="50"/>
+                    {%else%}
+                    <img src="/static/images/deafult.jpg" class="rounded-circle" width="50" height="50"/>
+                    </picture>
+                    {%endif%}
                     {%endif%}
                     {%endfor%}
                     <p class="small text-secondary m-0 mt-1">{{i.username}}</p>
@@ -134,7 +139,13 @@
                 <div class="col-3" style="padding: 0%;">
                     {%for usr in list_usr%}
                     {%if usr.username == item.user_name%}
-                    <img src="/static/images/{{usr.image}}" width="50" height="50"/>
+                    <picture>
+                        {% if usr.image == 'NONE' %}
+                        <img  src="/static/images/{{usr.image}}" class="rounded-circle" width="50" height="50"/>
+                        {%else%}
+                        <img src="/static/images/deafult.jpg" class="rounded-circle" width="50" height="50"/>
+                        {%endif%}
+                    </picture>
                     {%endif%}
                     {%endfor%}
                     <p class="small text-secondary m-0 mt-1">{{item.user_name}}</p>
