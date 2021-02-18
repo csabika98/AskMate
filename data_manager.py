@@ -58,7 +58,7 @@ def modify_database(query, tuple_parameters=None):
 
 
 def check_users():
-    connect_str = "dbname='askmate' user='postgres' host='localhost' password='nobles32'"
+    connect_str = "dbname='askmate' user='postgres' host='localhost' password='derank123'"
     connection = psycopg2.connect(connect_str)
     cursor = connection.cursor()
     cursor.execute(""" SELECT username FROM users ORDER BY id DESC;""")
@@ -77,7 +77,7 @@ def check_users():
 
 
 def check_for_email():
-    connect_str = "dbname='askmate' user='postgres' host='localhost' password='nobles32'"
+    connect_str = "dbname='askmate' user='postgres' host='localhost' password='derank123'"
     connection = psycopg2.connect(connect_str)
     cursor = connection.cursor()
     cursor.execute(""" SELECT email FROM users ORDER BY id DESC;""")
@@ -109,8 +109,8 @@ def edit_questions(image, submission_time, message, question_id, title):
     """Modify the questions"""
     modify_database("""UPDATE question SET image=%s, submission_time=%s, message=%s, title=%s WHERE id = %s; """, (image, submission_time, message, title, question_id))
 
-def edit_profile_page(username:str, password:str, email:str, id:str)->list:
-    fetch_database("""UPDATE users SET username=%s, password=%s, email=%s WHERE id= %s""",(username, password, email, id))
+def edit_profile_page(username:str, password:str, email:str, image:str, id:str)->list:
+    modify_database("""UPDATE users SET username=%s, password=%s, email=%s, image=%s WHERE id= %s""",(username, password, email, image, id))
 
 def answer_to_answer(answer_id,question_id, message, submission_time, user_name):
     """Write new answer to an existing answer"""

@@ -164,16 +164,16 @@ def edit_questions(question_id=None):
 @app.route("/edit_profile/", methods=["GET", "POST"])
 def edit_profiles():
     list_the_users = data_manager.list_users()
-    if request.method == "GET":
+    if request.method == "POST":
         user_id = session["id"]
-        username = request.args.get("username")
-        password = request.args.get("password") 
-        email = request.args.get("email")
-        #uploaded_image = request.files['image']
-        #file_name = uploaded_image.filename
-        #f uploaded_image.filename != "":
-        #    uploaded_image.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_image.filename))
-        data_manager.edit_profile_page(username, password, email,user_id)
+        username = request.form["username"]
+        password = request.form["password"] 
+        email = request.form["email"]
+        uploaded_image = request.files['image']
+        file_name = uploaded_image.filename
+        if uploaded_image.filename != "":
+            uploaded_image.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_image.filename))
+        data_manager.edit_profile_page(username, password, email, file_name, user_id)
         session.pop('id',None)
         session.pop('username',None)
         session.pop('email',None)

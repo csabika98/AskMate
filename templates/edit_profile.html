@@ -6,7 +6,7 @@
 
     {%block body%}
     <div class="container contact-form">
-        <form action={{ "/edit_profile/"+ session["id"] if id is defined else "/edit_profile/" }} method="get" enctype="multipart/form-data">
+        <form action={{ "/edit_profile/"+ session["id"] if id is defined else "/edit_profile/" }} method="post" enctype="multipart/form-data">
             <h3>Edit your profile</h3>
 
            <div class="row">
@@ -24,6 +24,8 @@
                     <label for ="emails">Type your new password:</label>
                     <input id="password" name="password" class="form-control" type="password" value="{{ session['password'] }}" required></>
                 </div>
+                <label style="margin: 1%" class="form-label" for="image">Upload your profile picture:</label>
+                <input style="margin: 1%" type="file"  class="form-control" id="image" name="image" />
 
                 <div class="col-md-6">
                 </div>
