@@ -111,8 +111,9 @@ def update_tag(cursor: RealDictCursor, question_id: str, tag_id: str) -> list:
 
 @app.route("/users")
 def list_users():
+    list_questions = data_manager.show_answers()
     list_users = data_manager.list_users()
-    return render_template("users.html", list_users=list_users)
+    return render_template("users.html", list_users=list_users, list_questions=list_questions)
 
 @app.route("/add_questions/", methods=["GET", "POST"])
 def add_questions():
@@ -185,11 +186,11 @@ def edit_profiles():
 
 @app.route("/display/<question_id>/vote_up/", methods=["GET", "POST"])
 def vote_up(question_id=None):
-
     if request.method == "GET":
         data_manager.update_question_vote(question_id, True)
+        data_manager.update_rep_vote(question_id, True)
         return redirect(request.referrer)
-    return render_template("display.html", question_id=question_id, add_questions=add_questions, add_comment=add_comment)
+    return render_template("display.html",question_id=question_id, add_questions=add_questions)
 
 @app.route("/display/<question_id>/mark_answer/", methods=["GET"])
 def mark_answer(question_id=None):
@@ -213,6 +214,7 @@ def vote_down(question_id=None):
 
     if request.method == "GET":
         data_manager.update_question_vote(question_id,False)
+        data_manager.update_rep_vote(question_id, False)
         return redirect(request.referrer)
 
     return render_template("display.html", question_id=question_id, add_questions=add_questions, add_comment=add_comment)

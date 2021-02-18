@@ -34,7 +34,7 @@
                 <td>{{item.question}}</td>
                 <td>{{item.answers}}</td>
                 <td>{{item.comments}}</td>
-                <td>{{item.rep}}</td>
+                {%for item2 in list_questions%}{%if item2.username == item.username%} <td>{{item2.rep}}</td>{%endif%}{%endfor%}
             </tr>
             {%endfor%}
 

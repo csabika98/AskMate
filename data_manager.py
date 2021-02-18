@@ -127,6 +127,20 @@ def show_answer(cursor: RealDictCursor, question_id: str) -> list:
     cursor.execute(query)
     return cursor.fetchall()
 
+
+@database_common.connection_handler
+def show_usersname(cursor: RealDictCursor) -> list:
+    query = f"""
+        SELECT username
+        FROM users
+    """
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    for row in rows:
+        return row["username"]
+
+
+
 @database_common.connection_handler
 def mark_accepted(cursor: RealDictCursor, isAccepted: bool, question_id: str):
     if isAccepted:
@@ -230,7 +244,7 @@ def users_id(cursor:RealDictCursor) -> list:
     cursor.execute(query)
     rows = cursor.fetchall()
     for row in rows:
-        row["id"]
+        return row["id"]
 
 @database_common.connection_handler
 def find_user(cursor:RealDictCursor, name:list) -> list:
@@ -457,6 +471,26 @@ def update_question_vote(cursor: RealDictCursor, question_id: str, vote: bool) -
         """
         cursor.execute(query)
 
+
+@database_common.connection_handler
+def update_rep_vote(cursor: RealDictCursor, question_id: str, vote: bool) -> list:
+    if vote == True:
+        query = f"""
+            UPDATE question
+            SET rep = rep + 1
+            WHERE id = {question_id}
+        """
+        cursor.execute(query)
+    else:
+        query = f"""
+            UPDATE question
+            SET rep = rep - 1
+            WHERE id = {question_id}
+        """
+        cursor.execute(query)
+
+
+
 @database_common.connection_handler
 def delete_question(cursor: RealDictCursor, question_id: str) -> list:
     query = f"""
@@ -493,8 +527,35 @@ def update_comment_vote(cursor: RealDictCursor, question_id: str, vote: bool) ->
         """
         cursor.execute(query)
 
-DATA_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-DATA_HEADER_2 = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
+
+@database_common.connection_handler
+def reputation_incr(cursor: RealDictCursor, user_id:str):
+        query = f"""
+            UPDATE users
+            SET rep = rep + 1
+            WHERE id = {user_id}
+        """
+        cursor.execute(query)
+
+
+@database_common.connection_handler
+def user_ids(cursor: RealDictCursor, username:str):
+        query = f"""
+            SELECT id
+            FROM users
+            WHERE username = '{username}' 
+        """
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        for row in rows:
+            return row["id"]
+          
+
+
+
+
+#DATA_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
+#DATA_HEADER_2 = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 
 def path_to_image(file_name):
     return "/static/images/"(file_name)
