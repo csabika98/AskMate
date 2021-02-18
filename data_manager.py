@@ -58,7 +58,7 @@ def modify_database(query, tuple_parameters=None):
 
 
 def check_users():
-    connect_str = "dbname='askmate' user='postgres' host='localhost' password='derank123'"
+    connect_str = "dbname='askmate' user='postgres' host='localhost' password='nobles32'"
     connection = psycopg2.connect(connect_str)
     cursor = connection.cursor()
     cursor.execute(""" SELECT username FROM users ORDER BY id DESC;""")
@@ -77,7 +77,7 @@ def check_users():
 
 
 def check_for_email():
-    connect_str = "dbname='askmate' user='postgres' host='localhost' password='derank123'"
+    connect_str = "dbname='askmate' user='postgres' host='localhost' password='nobles32'"
     connection = psycopg2.connect(connect_str)
     cursor = connection.cursor()
     cursor.execute(""" SELECT email FROM users ORDER BY id DESC;""")
@@ -126,6 +126,22 @@ def show_answer(cursor: RealDictCursor, question_id: str) -> list:
     """
     cursor.execute(query)
     return cursor.fetchall()
+
+@database_common.connection_handler
+def mark_accepted(cursor: RealDictCursor, isAccepted: bool, question_id: str):
+    if isAccepted:
+        query = f"""
+            UPDATE answer
+            SET accepted = true
+            WHERE question_id = '{question_id}'
+        """
+    else:
+        query = f"""
+            UPDATE answer
+            SET accepted = false
+            WHERE question_id = '{question_id}'
+        """
+    cursor.execute(query)
 
 @database_common.connection_handler
 def nested_comments(cursor: RealDictCursor, question_id: str) -> list:

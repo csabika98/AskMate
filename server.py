@@ -191,6 +191,22 @@ def vote_up(question_id=None):
         return redirect(request.referrer)
     return render_template("display.html", question_id=question_id, add_questions=add_questions, add_comment=add_comment)
 
+@app.route("/display/<question_id>/mark_answer/", methods=["GET"])
+def mark_answer(question_id=None):
+
+    if request.method == "GET":
+        data_manager.mark_accepted(True, question_id)
+        return redirect(request.referrer)
+    return render_template("display.html", question_id=question_id, add_questions=add_questions, add_comment=add_comment)
+
+
+@app.route("/display/<question_id>/disable_mark_answer/", methods=["GET"])
+def disable_mark_asnwer(question_id=None):
+
+    if request.method == "GET":
+        data_manager.mark_accepted(False, question_id)
+        return redirect(request.referrer)
+    return render_template("display.html", question_id=question_id, add_questions=add_questions, add_comment=add_comment)
 
 @app.route("/display/<question_id>/vote_down/", methods=["GET", "POST"])
 def vote_down(question_id=None):

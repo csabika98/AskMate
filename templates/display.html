@@ -92,7 +92,11 @@
 <div class="container">
     {%for item in list_comments%}
 	<div class="card" style="margin: 5px;">
-	    <div class="card-body">      
+        {%if item.accepted%}
+	    <div class="card-body" style="background-color: #a0e7a0">
+        {%else%}
+        <div class="card-body">
+        {%endif%}
 	        <div class="row">
         	    <div class="col-md-2">	
                     {%if session["username"] and session["password"] is defined%}
@@ -116,16 +120,31 @@
                     </div>
                     <div class="col">
                         <p>{{item.message}}</p>
-
+                    </div>
+                                        
+                    <div class="col-md-auto">
+                        {%for item in list_questions%}
+                        {% if session["username"] == item.username%}
+                        {%for i in list_comments%}
+                        {%if i.accepted%}
+                        <a style="text-decoration: none;" href="/display/{{item.id}}/disable_mark_answer/"><i class="fas fa-handshake-alt-slash"></i></a>
+                        {%else%}
+                        <a style="text-decoration: none;" href="/display/{{item.id}}/mark_answer/"><i class="fas fa-handshake"></i></a>
+                        {%endif%}
+                        {%endfor%}
+                        {%endif%}
+                        {%endfor%}
                     </div>
                     {%if session["username"] and session["password"] is defined%}
-                    {% if session["username"] != item.user_name%}
+                    {% if session["username"] == item.user_name%}
                     <div class="col-md-auto">
                         <a style="text-decoration: none;" href="/comments/{{item.id}}/{{question_id}}/add/"><i class="fa fa-reply"></i></a>
                         <a style="text-decoration: none;" href="/display/{{item.id}}/delete"><i class="fas fa-trash-alt"></i></a>
                     </div>
                     {%endif%}
                     {%endif%}
+
+
                 </div>
 
 
