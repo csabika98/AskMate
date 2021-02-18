@@ -220,13 +220,14 @@ def vote_down(question_id=None):
 
 @app.route("/display/<question_id>", methods=["POST", "GET"])
 def display_list(question_id=None, comment_id=None):
+    list_usr = data_manager.list_users()
     list_nested_comments = data_manager.nested_comments(question_id)
     list_tags = data_manager.load_tags(question_id)
     list_comment = data_manager.show_comment(question_id)
     list_questions = data_manager.show_answer(question_id)
     data_manager.update_view(question_id)
   
-    return render_template("display.html",list_tags=list_tags, question_id=question_id, comment_id=comment_id, list_comments=list_comment, list_questions=list_questions, nested_comment=list_nested_comments)
+    return render_template("display.html",list_usr=list_usr, list_tags=list_tags, question_id=question_id, comment_id=comment_id, list_comments=list_comment, list_questions=list_questions, nested_comment=list_nested_comments)
 
 
 @app.route("/display/<comment_id>/delete", methods=["POST", "GET"])

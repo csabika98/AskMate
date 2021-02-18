@@ -38,7 +38,9 @@
 
                 <div class="col-md-auto" style="padding: 0%;">
                     {%for usr in list_usr%}
-                    <img class="" src="/static/images/{{usr.image}}" width="50" height="50" alt="...">
+                    {%if usr.username == i.username%}
+                    <img src="/static/images/{{usr.image}}" width="50" height="50"/>
+                    {%endif%}
                     {%endfor%}
                     <p class="small text-secondary m-0 mt-1">{{i.username}}</p>
                     <p class="small text-secondary m-0 mt-1">{{i.submission_time}}</p> 
@@ -130,7 +132,11 @@
                 </div>
                 {%endif%}
                 <div class="col-3" style="padding: 0%;">
-                    <img src="https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png" width="50" height="50"/>
+                    {%for usr in list_usr%}
+                    {%if usr.username == item.user_name%}
+                    <img src="/static/images/{{usr.image}}" width="50" height="50"/>
+                    {%endif%}
+                    {%endfor%}
                     <p class="small text-secondary m-0 mt-1">{{item.user_name}}</p>
                     <p class="text-secondary">{{item.submission_time}}</p>
                 </div>
