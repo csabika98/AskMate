@@ -134,9 +134,12 @@
                     <a class="fas fa-chevron-down" href="/comments/{{question_id}}/{{item.id}}/vote_down" role="button" style="text-decoration: none;"></a>
 
                     </div>
+                    {%endif%}
                 </div>
-                {%endif%}
+
+
                 <div class="col-md-auto" style="padding: 0%;">
+
                     {%for usr in list_usr%}
                     {%if usr.username == item.user_name%}
                     <picture>
@@ -148,24 +151,31 @@
                     </picture>
                     {%endif%}
                     {%endfor%}
+                    <p class="small text-secondary m-0 mt-1">{{item.user_name}}</p>
+                    <p class="text-secondary">{{item.submission_time}}</p>
                 </div>
-                        <p class="small text-secondary m-0 mt-1">{{item.user_name}}</p>
-                        <p class="text-secondary">{{item.submission_time}}</p>
-                        <p>{{item.message}}</p>
-                                        
+                <div class="col">
+                    <p>{{item.message}}</p>
+                </div>
+
+
+                {%for item in list_questions%}
+                {% if session["username"] == item.username%}
+                {%for i in list_comments%}
+                {%if i.accepted%}                   
                     <div class="col-md-auto">
-                        {%for item in list_questions%}
-                        {% if session["username"] == item.username%}
-                        {%for i in list_comments%}
-                        {%if i.accepted%}
+
                         <a style="text-decoration: none;" href="/display/{{item.id}}/disable_mark_answer/"><i class="fas fa-handshake-alt-slash"></i></a>
-                        {%else%}
-                        <a style="text-decoration: none;" href="/display/{{item.id}}/mark_answer/"><i class="fas fa-handshake"></i></a>
-                        {%endif%}
-                        {%endfor%}
-                        {%endif%}
-                        {%endfor%}
                     </div>
+                        {%else%}
+                        <div class="col-md-auto">
+                        <a style="text-decoration: none;" href="/display/{{item.id}}/mark_answer/"><i class="fas fa-handshake"></i></a>
+                    </div>
+                        {%endif%}
+                        {%endfor%}
+                        {%endif%}
+                        {%endfor%}
+
                     {%if session["username"] and session["password"] is defined%}
                     {% if session["username"] == item.user_name%}
                     <div class="col-md-auto">
@@ -177,15 +187,13 @@
 
 
 
+                {%if item.image != 'default.png'%}
         	    <div class="col-md-10">
-
-                    {%if item.image != 'default.png'%}
         	        <p>
                         <img src="/static/images/{{item.image}}" width="350" height="350" class="centimage">
                    </p>
-                   {%endif%}
-
         	    </div>
+                {%endif%}
             </div>
             {%for i in nested_comment%}
             {%if i.answer_id == item.id%}
