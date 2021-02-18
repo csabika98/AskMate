@@ -17,9 +17,13 @@
     {% block body%}
 
     {% with messages = get_flashed_messages() %}
-    {% if messages %}
+    {% if messages == 'Log in failed' %}
     <div class="d-flex justify-content-evenly" id="alert">
         <div class="alert alert-danger" role="alert">{{messages[0]}}</div>
+    </div>
+    {%elif messages %}
+    <div class="d-flex justify-content-evenly" id="alert">
+        <div class="alert alert-success" role="alert">{{messages[0]}}</div>
     </div>
     {% endif %}
     {% endwith %}
@@ -104,13 +108,12 @@
                     {%endif%}
                     <div class="col d-flex justify-content-end align-items-center">
 
-                            {%if session["username"] is defined%}      
+                            {%if session["username"] is defined%}
                             <span class="badge bg-secondary" style="margin: 5px;">{{"Welcome!  " + session["username"]}}</span>   
+                            <a style="text-decoration: none;" href="/edit_profile/"><i class= "fas fa-user-edit" style="color: #c4cacf"></i></a>
                                 <form method="post" action="/logout" style="margin: 5px;">
-                                    
                                     <button type="submit" class="btn btn-outline-secondary btn-sm">Log out</button>
-                                </form>
-                                <a style="text-decoration: none;" href="/edit_profile/"><i class= "fas fa-user-edit" style="color: brown;"></i></a>
+                                </form>         
                             </div>
 
                             {%else%}
