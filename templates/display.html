@@ -136,7 +136,7 @@
                     </div>
                 </div>
                 {%endif%}
-                <div class="col-3" style="padding: 0%;">
+                <div class="col-md-auto" style="padding: 0%;">
                     {%for usr in list_usr%}
                     {%if usr.username == item.user_name%}
                     <picture>
@@ -148,12 +148,10 @@
                     </picture>
                     {%endif%}
                     {%endfor%}
-                    <p class="small text-secondary m-0 mt-1">{{item.user_name}}</p>
-                    <p class="text-secondary">{{item.submission_time}}</p>
                 </div>
-                    <div class="col">
+                        <p class="small text-secondary m-0 mt-1">{{item.user_name}}</p>
+                        <p class="text-secondary">{{item.submission_time}}</p>
                         <p>{{item.message}}</p>
-                    </div>
                                         
                     <div class="col-md-auto">
                         {%for item in list_questions%}
