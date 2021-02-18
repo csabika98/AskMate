@@ -198,7 +198,7 @@ def mark_answer(id=None):
     if request.method == "GET":
         data_manager.mark_accepted(True, id)
         return redirect(request.referrer)
-    return render_template("display.html", id=id, add_questions=add_questions)
+    return render_template("display.html", id=id, add_questions=add_questions, add_comment=add_comment)
 
 
 @app.route("/display/<id>/disable_mark_answer/", methods=["GET"])
