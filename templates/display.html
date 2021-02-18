@@ -11,35 +11,44 @@
 {%for i in list_questions%}
 <section class="card mt-4"  style="margin: auto; width: 88%; margin-bottom: 2%;">
     <div class="border p-2">
-        {%if session["username"] and session["password"] is defined%}
-        <a class="fas fa-chevron-up" href="/display/{{question_id}}/vote_up" role="button" style="text-decoration: none;"></a>
-        {% if i.vote_number >= 5 %}
-        <span style="margin: 5px;" class="badge rounded-pill bg-success">{{i.vote_number}}</span>
-        {% elif i.vote_number < 0 %}
-        <span style="margin: 5px;" class="badge rounded-pill bg-danger">{{i.vote_number}}</span>
-        {%else%}
-        <span style="margin: 5px;" class="badge rounded-pill bg-secondary">{{i.vote_number}}</span>
-        {%endif%}
-        <a class="fas fa-chevron-down" href="/display/{{question_id}}/vote_down" role="button" style="text-decoration: none;"></a>
-        {%endif%}
         <!-- Question-->
-        <div class="row m-0">
-            <div>
-                <h2 class="text-capitalize h5 mb-0" style="text-align: center;">{{i.title}}</h2>
-                <a class="text-decoration-none">
-                <img class="" src="https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png" width="50" height="50" alt="...">
-                </a>
-                <div class="row">
-                        <div class="col-2">
-                            <p class="small text-secondary m-0 mt-1">{{i.username}}</p>
-                            <p class="small text-secondary m-0 mt-1">{{i.submission_time}}</p>
-                        </div>
-
-                        <div class="col-8 text-center">     
-                            <p style="text-align: center;">{{i.message}}</p>
-                        </div>                 
+        <div class="row" style="margin: auto;">
+            <div class="row" >
+                {%if session["username"] and session["password"] is defined%}
+                <div class="col-md-auto" style="padding: 3px;">
+                    <div class="col text-center">
+                        <a class="fas fa-chevron-up" href="/display/{{question_id}}/vote_up" role="button" style="text-decoration: none;"></a>
+                    </div>
+        
+                    <div class="col ">
+                        {% if i.vote_number >= 5 %}
+                        <span style="margin: 5px;" class="badge rounded-pill bg-success">{{i.vote_number}}</span>
+                        {% elif i.vote_number < 0 %}
+                        <span style="margin: 5px;" class="badge rounded-pill bg-danger">{{i.vote_number}}</span>
+                        {%else%}
+                        <span style="margin: 5px;" class="badge rounded-pill bg-secondary">{{i.vote_number}}</span>
+                        {%endif%}
+                    </div>
+        
+                    <div class="col text-center">
+                        <a class="fas fa-chevron-down" href="/display/{{question_id}}/vote_down" role="button" style="text-decoration: none;"></a>
+                    </div>   
+                    {%endif%}
                 </div>
-            </div>
+
+                <div class="col-md-auto" style="padding: 0%;">
+                <img src="https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png" width="50" height="50" alt="...">
+                    <p class="small text-secondary m-0 mt-1">{{i.username}}</p>
+                    <p class="small text-secondary m-0 mt-1">{{i.submission_time}}</p> 
+ 
+                </div>
+
+                <div class="col text-center" style="padding-right: 18%;">
+                    <h2 class="text-center h5">{{i.title}}</h2>
+                    <p style="text-align: center;">{{i.message}}</p>
+
+                </div>
+
         </div>
         <!-- question end-->
 
@@ -93,31 +102,36 @@
     {%for item in list_comments%}
 	<div class="card" style="margin: 5px;">
         {%if item.accepted%}
-	    <div class="card-body" style="background-color: #a0e7a0">
+	    <div class="card-body" style="background-color: #a0e7a0;">
         {%else%}
         <div class="card-body">
         {%endif%}
-	        <div class="row">
-        	    <div class="col-md-2">	
+	        <div class="row" style="margin: auto;">
+        	    <div class="col-md-auto" style="margin: 0%; padding: 0%;">	
                     {%if session["username"] and session["password"] is defined%}
-                    <a class="fas fa-chevron-up" href="/comments/{{question_id}}/{{item.id}}/vote_up" role="button" style="text-decoration: none;"></a>
-                    {% if item.vote_number >= 5 %}
-                    <span style="margin: 5px;" class="badge rounded-pill bg-success">{{item.vote_number}}</span>
-                    {% elif item.vote_number < 0 %}
-                    <span style="margin: 5px;" class="badge rounded-pill bg-danger">{{item.vote_number}}</span>
-                    {%else%}
-                    <span style="margin: 5px;" class="badge rounded-pill bg-secondary">{{item.vote_number}}</span>
-                    {%endif%}
-                    
-                    <a class="fas fa-chevron-down" href="/comments/{{question_id}}/{{item.id}}/vote_down" role="button" style="text-decoration: none;"></a>
-                    {%endif%}
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <img src="https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png" width="50" height="50"/>
-                        <p class="small text-secondary m-0 mt-1">{{item.user_name}}</p>
-                        <p class="text-secondary">{{item.submission_time}}</p>
+                    <div class="col text-center">
+                        <a class="fas fa-chevron-up" href="/comments/{{question_id}}/{{item.id}}/vote_up" role="button" style="text-decoration: none;"></a>
                     </div>
+                    <div class="col">
+                        {% if item.vote_number >= 5 %}
+                        <span style="margin: 5px;" class="badge rounded-pill bg-success">{{item.vote_number}}</span>
+                        {% elif item.vote_number < 0 %}
+                        <span style="margin: 5px;" class="badge rounded-pill bg-danger">{{item.vote_number}}</span>
+                        {%else%}
+                        <span style="margin: 5px;" class="badge rounded-pill bg-secondary">{{item.vote_number}}</span>
+                        {%endif%}
+                    </div>
+                    <div class="col text-center">                    
+                    <a class="fas fa-chevron-down" href="/comments/{{question_id}}/{{item.id}}/vote_down" role="button" style="text-decoration: none;"></a>
+
+                    </div>
+                </div>
+                {%endif%}
+                <div class="col-3" style="padding: 0%;">
+                    <img src="https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png" width="50" height="50"/>
+                    <p class="small text-secondary m-0 mt-1">{{item.user_name}}</p>
+                    <p class="text-secondary">{{item.submission_time}}</p>
+                </div>
                     <div class="col">
                         <p>{{item.message}}</p>
                     </div>
@@ -144,8 +158,6 @@
                     {%endif%}
                     {%endif%}
 
-
-                </div>
 
 
         	    <div class="col-md-10">
