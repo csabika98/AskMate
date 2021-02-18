@@ -40,9 +40,9 @@
                     {%if usr.username == i.username%}
                     <picture>
                     {% if usr.image == 'NONE' %}
-                    <img  src="/static/images/{{usr.image}}" class="rounded-circle" width="50" height="50"/>
-                    {%else%}
                     <img src="/static/images/deafult.jpg" class="rounded-circle" width="50" height="50"/>
+                    {%else%}
+                    <img  src="/static/images/{{usr.image}}" class="rounded-circle" width="50" height="50"/>
                     </picture>
                     {%endif%}
                     {%endif%}
@@ -141,9 +141,9 @@
                     {%if usr.username == item.user_name%}
                     <picture>
                         {% if usr.image == 'NONE' %}
-                        <img  src="/static/images/{{usr.image}}" class="rounded-circle" width="50" height="50"/>
-                        {%else%}
                         <img src="/static/images/deafult.jpg" class="rounded-circle" width="50" height="50"/>
+                        {%else%}
+                        <img  src="/static/images/{{usr.image}}" class="rounded-circle" width="50" height="50"/>
                         {%endif%}
                     </picture>
                     {%endif%}
