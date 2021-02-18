@@ -11,7 +11,8 @@
     <div class="col-auto">
         <table class="table table-bordered table-striped table-light table-hover">
             <thead>
-            <tr>           
+            <tr> 
+                <th scope="col">Profile Picture</th>          
                 <th scope="col">Username</th>
                 <th scope="col">Email</th>
                 <th scope="col">Registration date</th>
@@ -26,6 +27,7 @@
             <tbody>
                 {%for item in list_users%}
             <tr>
+                <td><img  src="/static/images/{{item.image}}" class="rounded-circle" width="50" height="50"/></td>
                 <td>{{item.username}}</td>
                 <td>{{item.email}}</td>
                 <td>{{item.regdate}}</td>
