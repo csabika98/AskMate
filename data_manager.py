@@ -142,18 +142,18 @@ def show_usersname(cursor: RealDictCursor) -> list:
 
 
 @database_common.connection_handler
-def mark_accepted(cursor: RealDictCursor, isAccepted: bool, question_id: str):
+def mark_accepted(cursor: RealDictCursor, isAccepted: bool, id: str):
     if isAccepted:
         query = f"""
             UPDATE answer
             SET accepted = true
-            WHERE question_id = '{question_id}'
+            WHERE id = '{id}'
         """
     else:
         query = f"""
             UPDATE answer
             SET accepted = false
-            WHERE question_id = '{question_id}'
+            WHERE id = '{id}'
         """
     cursor.execute(query)
 

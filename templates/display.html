@@ -109,6 +109,7 @@
 {%if list_comments%}
 <div class="container">
     {%for item in list_comments%}
+    {%for item2 in list_questions%}
 	<div class="card" style="margin: 5px;">
         {%if item.accepted%}
 	    <div class="card-body" style="background-color: #a0e7a0;">
@@ -158,26 +159,21 @@
                     <p>{{item.message}}</p>
                 </div>
 
-
-                {%for item in list_questions%}
-                {% if session["username"] == item.username%}
-                {%for i in list_comments%}
-                {%if i.accepted%}                   
+                {% if session["username"] == item.user_name or item_user_name != session["username"]%}
+                {%if item.accepted%}                   
                     <div class="col-md-auto">
 
                         <a style="text-decoration: none;" href="/display/{{item.id}}/disable_mark_answer/"><i class="fas fa-handshake-alt-slash"></i></a>
                     </div>
-                        {%else%}
+                {%else%}
                         <div class="col-md-auto">
                         <a style="text-decoration: none;" href="/display/{{item.id}}/mark_answer/"><i class="fas fa-handshake"></i></a>
                     </div>
                         {%endif%}
-                        {%endfor%}
                         {%endif%}
                         {%endfor%}
-
                     {%if session["username"] and session["password"] is defined%}
-                    {% if session["username"] == item.user_name%}
+                    {% if session["username"] == item.user_name or item.user_name != session["username"]%}
                     <div class="col-md-auto">
                         <a style="text-decoration: none;" href="/comments/{{item.id}}/{{question_id}}/add/"><i class="fa fa-reply"></i></a>
                         <a style="text-decoration: none;" href="/display/{{item.id}}/delete"><i class="fas fa-trash-alt"></i></a>
@@ -202,15 +198,23 @@
 
             	        <div class="row">
                     	    <div class="col-3">
-                    	        <img src="https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png" width="50" height="50"/>
-                                <p class="small text-secondary m-0 mt-1">{{i.user_name}}</p>
-                    	        <p class="text-secondary">{{i.submission_time}}</p>
+                    	        {%for usr in list_usr%}
+                                {%if usr.username == item.user_name%}
+                                <picture>
+                                {% if usr.image == 'NONE' %}
+                                <img src="/static/images/deafult.jpg" class="rounded-circle" width="50" height="50"/>
+                                {%else%}
+                                <img  src="/static/images/{{usr.image}}" class="rounded-circle" width="50" height="50"/>
+                                {%endif%}
+                                </picture>
+                                {%endif%}
+                                {%endfor%}
                     	    </div>
-                            
+                            <p class="small text-secondary m-0 mt-1">{{item.user_name}}</p>
+                            <p class="text-secondary">{{item.submission_time}}</p>
                     	    <div class="col">
                     	        <p>{{i.message}}</p>
                     	    </div>
-
             	        </div>
             	    </div>
                 </div>
