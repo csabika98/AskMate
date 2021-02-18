@@ -199,7 +199,7 @@
             	        <div class="row">
                     	    <div class="col-3">
                     	        {%for usr in list_usr%}
-                                {%if usr.username == item.user_name%}
+                                {%if usr.username == session["username"]%}
                                 <picture>
                                 {% if usr.image == 'NONE' %}
                                 <img src="/static/images/deafult.jpg" class="rounded-circle" width="50" height="50"/>
