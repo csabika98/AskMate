@@ -159,7 +159,7 @@
                     <p>{{item.message}}</p>
                 </div>
 
-                {% if session["username"] == item.user_name or item_user_name != session["username"]%}
+                {% if session["username"] == item2.username%}
                 {%if item.accepted%}                   
                     <div class="col-md-auto">
 
