@@ -9,6 +9,15 @@ Changes 2.1:
 
 
 Pictures:
+OpenSource Project:
+![alt text](https://i.imgur.com/atzr094.png)
 ![alt text](https://i.imgur.com/kiXQv3L.png)
 ![alt text](https://i.imgur.com/6OMZTkd.png)
 ![alt text](https://i.imgur.com/2vF12Qo.png)
+
+
+
+
+
+Our team:
+![alt text](https://i.imgur.com/yhFhO08.png)
