@@ -15,5 +15,3 @@ put your postgres password to the user.txt ( you can use environmental variable 
 
 
 
-
-
